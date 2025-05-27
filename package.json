@@ -13,6 +13,7 @@
     "@vueuse/core": "^13.3.0",
     "@vueuse/head": "^2.0.0",
     "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
     "lodash": "^4.17.21",
     "pinia": "^3.0.2",
     "vitest": "^3.1.4",
