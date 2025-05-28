@@ -125,19 +125,33 @@ table {
 }
 /* End CSS Reset */
 
-:root {
+:root,
+html.light-mode {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    --color-primary: #7f40bf;
+    --color-secondary: #c78f58;
+    --color-background: #fff;
+    --color-surface: #fff;
+    --color-text: #111;
+    color-scheme: light;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode palette: applied when .dark-mode is on <html> */
+html.dark-mode {
+    --color-primary: #b388ff;
+    --color-secondary: #ffd180;
+    --color-background: #242424;
+    --color-surface: #1a1a1a;
+    --color-text: #e7e7e7;
+    color-scheme: dark;
 }
 
 a {
@@ -190,17 +204,4 @@ button:focus-visible {
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-}
-
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
-    a:hover {
-        color: #747bff;
-    }
-    button {
-        background-color: #f9f9f9;
-    }
 }

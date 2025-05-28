@@ -7,7 +7,7 @@ import _ from 'lodash';
 </script>
 
 <template>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Sup Gangsta" />
 </template>
 
 <style scoped></style>
