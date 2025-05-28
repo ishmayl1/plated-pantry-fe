@@ -6,6 +6,7 @@ import vuetify from '@/plugins/vuetify';
 import { createHead } from '@vueuse/head';
 import '@/style.css';
 import { useAuthStore } from '@/stores/auth';
+import '@mdi/font/css/materialdesignicons.css'; // <-- Import Material Design Icons CSS
 
 const app = createApp(App);
 const pinia = createPinia();

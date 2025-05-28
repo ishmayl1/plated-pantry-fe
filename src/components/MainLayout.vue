@@ -1,0 +1,81 @@
+<script setup>
+import ThemeToggleButton from '@/components/ThemeToggleButton.vue';
+import NavDrawer from '@/components/NavDrawer.vue';
+import HeroImageCard from '@/components/HeroImageCard.vue';
+import InstructionsCard from '@/components/InstructionsCard.vue';
+import AppBar from '@/components/AppBar.vue';
+const steps = [
+    'Boil pasta according to package instructions. Reserve 1 cup of pasta water.',
+    'In a large pan, melt butter and sauté minced garlic until fragrant.',
+    'Add shrimp and cook until pink, about 2-3 minutes per side.',
+    'Add cooked pasta, parsley, and lemon juice. Toss to combine.',
+    'Season with salt and pepper to taste. Serve hot with parmesan cheese.'
+];
+</script>
+
+<template>
+    <v-app>
+        <div class="main-layout-flex">
+            <NavDrawer />
+            <v-main>
+                <v-container fluid class="pa-0 main-content-flex">
+                    <AppBar />
+                    <!-- <v-row
+                        class="mt-8"
+                        align="stretch"
+                        justify="center"
+                        no-gutters
+                    >
+                        <v-col cols="12" lg="7" class="pr-lg-6 mb-6 mb-lg-0">
+                            <HeroImageCard />
+                        </v-col>
+                        <v-col cols="12" lg="5">
+                            <InstructionsCard :steps="steps" />
+                        </v-col>
+                    </v-row> -->
+                    <div class="footer-spacer" />
+                    <v-footer
+                        class="main-footer mt-12"
+                        color="transparent"
+                        padless
+                    >
+                        <v-col class="text-center text-caption" cols="12"
+                            >© 2025 Plated Pantry. All rights reserved.</v-col
+                        >
+                    </v-footer>
+                </v-container>
+            </v-main>
+        </div>
+    </v-app>
+</template>
+
+<style scoped>
+.main-layout-flex {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content-flex {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    flex: 1;
+    padding: 0;
+}
+
+.footer-spacer {
+    flex: 1 1 auto;
+}
+
+.main-footer {
+    margin-top: 0;
+    text-align: center;
+    color: #a0b2bd;
+    font-size: 0.95em;
+    padding-bottom: 1.5rem;
+}
+
+.v-application {
+    font-family: 'Inter', sans-serif;
+}
+</style>
