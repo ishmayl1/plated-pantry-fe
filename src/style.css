@@ -133,7 +133,7 @@ html.light-mode {
 
     --color-primary: #7f40bf;
     --color-secondary: #c78f58;
-    --color-background: #fff;
+    --color-background: #fff8f0;
     --color-surface: #fff;
     --color-text: #111;
     color-scheme: light;
@@ -171,6 +171,13 @@ body {
     min-height: 100vh;
 }
 
+body,
+.v-application {
+    background: var(--color-background) !important;
+    color: var(--color-text) !important;
+    transition: background 0.2s, color 0.2s;
+}
+
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
@@ -204,4 +211,6 @@ button:focus-visible {
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
+    background: transparent;
+    /* Remove background so body/.v-application color shows through */
 }
