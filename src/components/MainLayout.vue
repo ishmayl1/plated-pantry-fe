@@ -3,6 +3,7 @@ import ThemeToggleButton from '@/components/ThemeToggleButton.vue';
 import NavDrawer from '@/components/NavDrawer.vue';
 import HeroImageCard from '@/components/HeroImageCard.vue';
 import InstructionsCard from '@/components/InstructionsCard.vue';
+import AppBar from '@/components/AppBar.vue';
 const steps = [
     'Boil pasta according to package instructions. Reserve 1 cup of pasta water.',
     'In a large pan, melt butter and sauté minced garlic until fragrant.',
@@ -18,18 +19,7 @@ const steps = [
             <NavDrawer />
             <v-main>
                 <v-container fluid class="pa-0 main-content-flex">
-                    <v-app-bar flat color="transparent" class="px-8">
-                        <v-spacer />
-                        <ThemeToggleButton class="mr-4" />
-                        <v-btn icon>
-                            <v-avatar size="36">
-                                <img
-                                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg"
-                                    alt="User Avatar"
-                                />
-                            </v-avatar>
-                        </v-btn>
-                    </v-app-bar>
+                    <AppBar />
                     <!-- <v-row
                         class="mt-8"
                         align="stretch"
