@@ -1,0 +1,9 @@
+// Global SCSS variables, mixins, and functions
+$primary-color: #7f40bf;
+$secondary-color: #c78f58;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
