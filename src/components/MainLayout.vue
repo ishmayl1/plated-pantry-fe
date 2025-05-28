@@ -30,7 +30,7 @@ const steps = [
                             </v-avatar>
                         </v-btn>
                     </v-app-bar>
-                    <v-row
+                    <!-- <v-row
                         class="mt-8"
                         align="stretch"
                         justify="center"
@@ -42,7 +42,7 @@ const steps = [
                         <v-col cols="12" lg="5">
                             <InstructionsCard :steps="steps" />
                         </v-col>
-                    </v-row>
+                    </v-row> -->
                     <div class="footer-spacer" />
                     <v-footer
                         class="main-footer mt-12"

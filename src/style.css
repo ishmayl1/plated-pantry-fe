@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
 /* Modern CSS Reset */
 html,
 body,
@@ -87,7 +89,6 @@ video {
     font: inherit;
     vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article,
 aside,
 details,
@@ -130,27 +131,28 @@ html.light-mode {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-
-    --color-primary: #7f40bf;
+    --color-primary: #f57274;
     --color-secondary: #c78f58;
     --color-background: #fff8f0;
     --color-surface: #fff;
     --color-text: #111;
+    --color-action: #49b583;
+    --color-navdrawer-bg: #fff;
+    --color-navdrawer-text: #222;
     color-scheme: light;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
-/* Dark mode palette: applied when .dark-mode is on <html> */
 html.dark-mode {
-    --color-primary: #b388ff;
+    --color-primary: #f57274;
     --color-secondary: #ffd180;
     --color-background: #242424;
     --color-surface: #1a1a1a;
     --color-text: #e7e7e7;
+    --color-navdrawer-bg: #23232a;
+    --color-navdrawer-text: #e7e7e7;
     color-scheme: dark;
 }
 
@@ -163,19 +165,13 @@ a:hover {
     color: #535bf2;
 }
 
-body {
-    margin: 0;
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
-}
-
 body,
 .v-application {
     background: var(--color-background) !important;
     color: var(--color-text) !important;
-    transition: background 0.2s, color 0.2s;
+    transition:
+        background 0.2s,
+        color 0.2s;
 }
 
 h1 {
@@ -212,5 +208,12 @@ button:focus-visible {
     padding: 2rem;
     text-align: center;
     background: transparent;
-    /* Remove background so body/.v-application color shows through */
+}
+
+/* Brand font utility */
+.brand-font {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    font-size: 1.5rem;
 }

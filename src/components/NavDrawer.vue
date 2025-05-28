@@ -1,46 +1,54 @@
 <template>
     <v-navigation-drawer app permanent width="256">
         <v-list nav dense>
-            <v-list-item class="py-6">
-                <v-avatar size="48" class="mb-2" color="#ffe4e1">
-                    <v-icon color="#f57274">f4a6</v-icon>
+            <v-list-item class="py-6 nav-header-item">
+                <v-avatar
+                    size="48"
+                    class="mb-2 nav-header-avatar"
+                    color="#ffe4e1"
+                >
+                    <v-icon size="x-large" color="#f57274"
+                        >mdi-silverware-variant</v-icon
+                    >
                 </v-avatar>
-                <div class="font-weight-bold text-h6 mt-2">Plated Pantry</div>
+                <div
+                    class="font-weight-bold text-h6 mt-2 nav-header-title brand-font"
+                >
+                    Plated Pantry
+                </div>
             </v-list-item>
             <v-divider class="my-2" />
-            <v-list-item
-                prepend-icon="mdi-home"
-                title="Dashboard"
-                value="dashboard"
-                active
-            />
-            <v-list-item
-                prepend-icon="mdi-format-list-bulleted"
-                title="My Plans"
-                value="plans"
-            />
-            <v-list-item
-                prepend-icon="mdi-bag-personal"
-                title="Orders"
-                value="orders"
-            />
-            <v-list-item
-                prepend-icon="mdi-book-open-page-variant"
-                title="Recipes"
-                value="recipes"
-            />
-            <v-list-item
-                prepend-icon="mdi-headset"
-                title="Support"
-                value="support"
-            />
+            <v-list-item class="nav-list-item" value="dashboard" active>
+                <template #prepend>
+                    <v-icon>mdi-home</v-icon>
+                </template>
+                <div class="nav-list-title">Dashboard</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="plans">
+                <template #prepend>
+                    <v-icon>mdi-format-list-bulleted</v-icon>
+                </template>
+                <div class="nav-list-title">My Plans</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="orders">
+                <template #prepend>
+                    <v-icon>mdi-bag-personal</v-icon>
+                </template>
+                <div class="nav-list-title">Orders</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="recipes">
+                <template #prepend>
+                    <v-icon>mdi-book-open-page-variant</v-icon>
+                </template>
+                <div class="nav-list-title">Recipes</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="support">
+                <template #prepend>
+                    <v-icon>mdi-headset</v-icon>
+                </template>
+                <div class="nav-list-title">Support</div>
+            </v-list-item>
             <v-spacer />
-            <v-list-item
-                prepend-icon="mdi-logout"
-                title="Log Out"
-                value="logout"
-                color="error"
-            />
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -50,28 +58,52 @@
 </script>
 
 <style scoped>
-.v-list-item {
-    justify-content: center;
-    text-align: center;
+.v-navigation-drawer {
+    background: var(--color-navdrawer-bg) !important;
+    color: var(--color-navdrawer-text) !important;
+    transition:
+        background 0.2s,
+        color 0.2s;
+    box-shadow:
+        0 4px 24px 0 rgba(40, 40, 60, 0.18),
+        0 1.5px 4px 0 rgba(40, 40, 60, 0.1);
 }
-.v-list-item .v-list-item__prepend,
-.v-list-item .v-list-item__content {
-    justify-content: center;
+.v-navigation-drawer a,
+.v-navigation-drawer .v-list-item__content {
+    color: var(--color-navdrawer-text) !important;
+}
+.v-navigation-drawer .v-list-item--active {
+    background: rgba(127, 64, 191, 0.12) !important;
+}
+.nav-list-item {
     display: flex;
-    width: 100%;
-}
-.v-list-item .v-list-item__content {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: start;
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+        background 0.18s,
+        color 0.18s;
 }
-.v-list-item .v-list-item__title {
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-    display: flex;
+.nav-list-item:hover {
+    background: rgba(127, 64, 191, 0.1);
 }
-.v-list-item .v-avatar {
-    margin-left: auto;
-    margin-right: auto;
+.nav-list-item[active],
+.nav-list-item.v-list-item--active {
+    background: rgba(127, 64, 191, 0.18);
+    color: var(--color-primary) !important;
+}
+.nav-list-item[active] .v-icon,
+.nav-list-item.v-list-item--active .v-icon,
+.nav-list-item[active] .nav-list-title,
+.nav-list-item.v-list-item--active .nav-list-title {
+    color: var(--color-primary) !important;
+}
+.nav-list-title {
+    flex: 1;
+    text-align: left;
+    margin-left: 8px;
 }
 </style>
