@@ -1,14 +1,50 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+import AppInput from '@/components/AppInput.vue';
+import AppButton from '@/components/AppButton.vue';
+import { useInputValidation } from '@/composables/useInputValidation';
 
-const username = ref('');
+const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const firstName = ref('');
+const lastName = ref('');
 const loading = ref(false);
 const error = ref('');
 const success = ref('');
 const router = useRouter();
+const auth = useAuthStore();
+
+const {
+    emailError,
+    passwordError,
+    firstNameError,
+    lastNameError,
+    confirmPasswordError
+} = useInputValidation({
+    email,
+    password,
+    confirmPassword,
+    firstName,
+    lastName
+});
+
+const isFormValid = computed(() => {
+    return (
+        firstName.value.trim() &&
+        lastName.value.trim() &&
+        email.value.trim() &&
+        password.value &&
+        confirmPassword.value &&
+        !firstNameError.value &&
+        !lastNameError.value &&
+        !emailError.value &&
+        !passwordError.value &&
+        !confirmPasswordError.value
+    );
+});
 
 async function handleRegister() {
     error.value = '';
@@ -18,69 +54,108 @@ async function handleRegister() {
         return;
     }
     loading.value = true;
-    try {
-        const response = await fetch(
-            `${import.meta.env.VITE_AUTH_ENDPOINT}/register`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: username.value,
-                    password: password.value
-                })
-            }
-        );
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.message || 'Registration failed');
-        }
+    const result = await auth.register({
+        email: email.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        password: password.value
+    });
+    if (result.success) {
         success.value = 'Account created! You can now log in.';
         setTimeout(() => router.push({ name: 'Login' }), 1200);
-    } catch (err) {
-        error.value = err.message;
-    } finally {
-        loading.value = false;
+    } else {
+        error.value = result.error;
     }
+    loading.value = false;
 }
 </script>
 
 <template>
     <div class="register-container">
         <form @submit.prevent="handleRegister" class="register-form">
-            <h2>Create Account</h2>
+            <div class="mb-5">
+                <v-avatar
+                    size="64"
+                    class="mb-2 nav-header-avatar"
+                    color="#ffe4e1"
+                >
+                    <v-icon size="x-large" color="#f57274"
+                        >mdi-silverware-variant</v-icon
+                    >
+                </v-avatar>
+                <div
+                    class="font-weight-bold text-h6 mt-2 nav-header-title brand-font"
+                >
+                    Plated Pantry
+                </div>
+            </div>
+            <span class="text-h5 font-weight-bold mb-5"
+                >Create Your Account</span
+            >
             <div class="form-group">
-                <label for="username">Username</label>
-                <input
-                    id="username"
-                    v-model="username"
+                <AppInput
+                    id="firstName"
+                    v-model="firstName"
+                    label="First Name"
                     type="text"
                     required
-                    autocomplete="username"
+                    autocomplete="given-name"
+                    :error="!!firstNameError"
+                    :error-messages="firstNameError || undefined"
                 />
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input
+                <AppInput
+                    id="lastName"
+                    v-model="lastName"
+                    label="Last Name"
+                    type="text"
+                    required
+                    autocomplete="family-name"
+                    :error="!!lastNameError"
+                    :error-messages="lastNameError || undefined"
+                />
+            </div>
+            <div class="form-group">
+                <AppInput
+                    id="email"
+                    v-model="email"
+                    label="Email"
+                    type="email"
+                    required
+                    autocomplete="email"
+                    :error="!!emailError"
+                    :error-messages="emailError || undefined"
+                />
+            </div>
+            <div class="form-group">
+                <AppInput
                     id="password"
                     v-model="password"
+                    label="Password"
                     type="password"
                     required
                     autocomplete="new-password"
+                    :error="!!passwordError"
+                    :error-messages="passwordError || undefined"
                 />
             </div>
             <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input
+                <AppInput
                     id="confirmPassword"
                     v-model="confirmPassword"
+                    label="Confirm Password"
                     type="password"
                     required
                     autocomplete="new-password"
+                    :error="!!confirmPasswordError"
+                    :error-messages="confirmPasswordError || undefined"
                 />
             </div>
-            <button type="submit" :disabled="loading">
+            <v-divider class="mt-10"></v-divider>
+            <AppButton type="submit" :disabled="loading || !isFormValid">
                 {{ loading ? 'Creating...' : 'Create Account' }}
-            </button>
+            </AppButton>
             <p v-if="error" class="error">{{ error }}</p>
             <p v-if="success" class="success">{{ success }}</p>
         </form>
@@ -90,38 +165,36 @@ async function handleRegister() {
 <style scoped lang="scss">
 .register-container {
     min-height: 100vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-background);
+    overflow: hidden;
 }
 .register-form {
     background: var(--color-surface);
     color: var(--color-text);
-    border: 1px solid var(--color-secondary);
-    border-radius: 8px;
+    border-radius: 20px;
     padding: 2rem 2.5rem;
     min-width: 320px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    box-shadow:
+        0 4px 24px 0 rgba(40, 40, 60, 0.12),
+        0 1.5px 4px 0 rgba(40, 40, 60, 0.08);
+    width: 100%;
+    max-width: 400px;
+    align-items: stretch;
 }
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-}
-input {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-secondary);
-    border-radius: 4px;
-    background: var(--color-background);
-    color: var(--color-text);
-    font-size: 1rem;
-}
-input:focus {
-    outline: 2px solid var(--color-primary);
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
 }
 button {
     background: var(--color-primary);

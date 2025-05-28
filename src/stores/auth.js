@@ -2,7 +2,9 @@ import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        token: localStorage.getItem('jwt') || null
+        token: localStorage.getItem('jwt') || null,
+        error: '',
+        success: ''
     }),
     actions: {
         setToken(token) {
@@ -34,6 +36,34 @@ export const useAuthStore = defineStore('auth', {
                 return { success: true };
             } catch (err) {
                 return { success: false, message: err.message };
+            }
+        },
+        async register({ email, firstName, lastName, password }) {
+            this.error = '';
+            this.success = '';
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_AUTH_ENDPOINT}/register`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email,
+                            firstName,
+                            lastName,
+                            password
+                        })
+                    }
+                );
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Registration failed');
+                }
+                this.success = 'Account created! You can now log in.';
+                return { success: true };
+            } catch (err) {
+                this.error = err.message;
+                return { success: false, error: err.message };
             }
         },
         logout() {
