@@ -38,7 +38,13 @@ export const useAuthStore = defineStore('auth', {
                 return { success: false, message: err.message };
             }
         },
-        async register({ email, firstName, lastName, password }) {
+        async register({
+            email,
+            firstName,
+            lastName,
+            password,
+            acceptedTerms
+        }) {
             this.error = '';
             this.success = '';
             try {
@@ -51,7 +57,8 @@ export const useAuthStore = defineStore('auth', {
                             email,
                             firstName,
                             lastName,
-                            password
+                            password,
+                            acceptedTerms
                         })
                     }
                 );

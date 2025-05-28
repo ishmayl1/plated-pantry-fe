@@ -11,6 +11,7 @@ const password = ref('');
 const confirmPassword = ref('');
 const firstName = ref('');
 const lastName = ref('');
+const acceptedTerms = ref(false);
 const loading = ref(false);
 const error = ref('');
 const success = ref('');
@@ -38,6 +39,7 @@ const isFormValid = computed(() => {
         email.value.trim() &&
         password.value &&
         confirmPassword.value &&
+        acceptedTerms.value &&
         !firstNameError.value &&
         !lastNameError.value &&
         !emailError.value &&
@@ -46,27 +48,44 @@ const isFormValid = computed(() => {
     );
 });
 
+let submitTimeout = null;
+
 async function handleRegister() {
-    error.value = '';
-    success.value = '';
-    if (password.value !== confirmPassword.value) {
-        error.value = 'Passwords do not match.';
-        return;
+    if (submitTimeout) {
+        clearTimeout(submitTimeout);
     }
-    loading.value = true;
-    const result = await auth.register({
-        email: email.value,
-        firstName: firstName.value,
-        lastName: lastName.value,
-        password: password.value
-    });
-    if (result.success) {
-        success.value = 'Account created! You can now log in.';
-        setTimeout(() => router.push({ name: 'Login' }), 1200);
-    } else {
-        error.value = result.error;
-    }
-    loading.value = false;
+
+    // Debounce the form submission to prevent multiple clicks
+    submitTimeout = setTimeout(async () => {
+        error.value = '';
+        success.value = '';
+        // Trim all form values before using them
+        const trimmedFirstName = firstName.value.trim();
+        const trimmedLastName = lastName.value.trim();
+        const trimmedEmail = email.value.trim();
+        const trimmedPassword = password.value; // Don't trim password
+        const trimmedConfirmPassword = confirmPassword.value; // Don't trim password
+
+        if (trimmedPassword !== trimmedConfirmPassword) {
+            error.value = 'Passwords do not match.';
+            return;
+        }
+        loading.value = true;
+        const result = await auth.register({
+            email: trimmedEmail,
+            firstName: trimmedFirstName,
+            lastName: trimmedLastName,
+            password: trimmedPassword,
+            acceptedTerms: acceptedTerms.value
+        });
+        if (result.success) {
+            success.value = 'Account created! You can now log in.';
+            setTimeout(() => router.push({ name: 'Login' }), 1200);
+        } else {
+            error.value = result.error;
+        }
+        loading.value = false;
+    }, 500);
 }
 </script>
 
@@ -152,6 +171,15 @@ async function handleRegister() {
                     :error-messages="confirmPasswordError || undefined"
                 />
             </div>
+            <div class="form-group terms-group">
+                <label class="terms-label">
+                    <input type="checkbox" v-model="acceptedTerms" required />
+                    <span
+                        >I accept the
+                        <a href="#" target="_blank">Terms of Service</a></span
+                    >
+                </label>
+            </div>
             <v-divider class="mt-10"></v-divider>
             <AppButton type="submit" :disabled="loading || !isFormValid">
                 {{ loading ? 'Creating...' : 'Create Account' }}
@@ -220,5 +248,27 @@ button:disabled {
     color: #388e3c;
     font-size: 0.95em;
     margin-top: 0.5rem;
+}
+.terms-group {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+.terms-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.97em;
+    color: var(--color-text);
+    gap: 0.5em;
+    font-weight: 400;
+}
+.terms-label input[type='checkbox'] {
+    margin-right: 0.5em;
+    accent-color: var(--color-primary);
+}
+.terms-label a {
+    text-decoration: underline;
+    cursor: pointer;
 }
 </style>
