@@ -35,6 +35,17 @@ export const useAuthStore = defineStore('auth', {
             } catch (err) {
                 return { success: false, message: err.message };
             }
+        },
+        logout() {
+            // Remove JWT and user info from localStorage/sessionStorage
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('user');
+            this.token = null;
+            this.user = null;
+            // Optionally, redirect to login or home page
+            if (typeof window !== 'undefined') {
+                window.location.href = '/login';
+            }
         }
     },
     getters: {

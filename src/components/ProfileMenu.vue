@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+
+const auth = useAuthStore();
 
 const isDark = ref(false);
 const menuOpen = ref(false);
@@ -18,6 +21,10 @@ function toggleTheme() {
         html.classList.remove('dark-mode');
         html.classList.add('light-mode');
     }
+}
+
+function onLogout() {
+    auth.logout();
 }
 </script>
 
@@ -59,10 +66,8 @@ function toggleTheme() {
                 >
                 <span>{{ isDark ? 'Light Mode' : 'Dark Mode' }}</span>
             </v-list-item>
-            <v-list-item class="profile-menu-item logout">
-                <v-icon size="20" color="#FF6B6B" class="mr-2"
-                    >mdi-logout</v-icon
-                >
+            <v-list-item class="profile-menu-item logout" @click="onLogout">
+                <v-icon size="20" class="mr-2 icon-primary">mdi-logout</v-icon>
                 <span>Log Out</span>
             </v-list-item>
         </v-list>
@@ -89,7 +94,7 @@ function toggleTheme() {
     border-color: #fff1e6;
 }
 .profile-avatar {
-    border: 2px solid #ff6b6b;
+    border: 2px solid var(--color-primary);
 }
 .profile-name {
     font-weight: 600;
@@ -100,15 +105,13 @@ function toggleTheme() {
 .profile-chevron {
     margin-left: 2px;
     transition: transform 0.18s;
-}
-.profile-chevron.open {
-    /* No extra styles needed, icon changes via Vue binding */
+    color: var(--color-action);
 }
 .profile-menu-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #2d3047;
+    color: var(--color-text);
     font-weight: 500;
     padding: 10px 20px;
     border-radius: 0.75rem;
@@ -119,6 +122,6 @@ function toggleTheme() {
     background: #fff1e6;
 }
 .profile-menu-item.logout {
-    color: #ff6b6b;
+    color: var(--color-primary);
 }
 </style>
