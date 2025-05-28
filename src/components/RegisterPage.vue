@@ -1,32 +1,53 @@
 <script setup>
 import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth.js';
-
-const auth = useAuthStore();
+import { useRouter } from 'vue-router';
 
 const username = ref('');
 const password = ref('');
+const confirmPassword = ref('');
 const loading = ref(false);
 const error = ref('');
+const success = ref('');
+const router = useRouter();
 
-async function handleLogin() {
+async function handleRegister() {
     error.value = '';
-    loading.value = true;
-    const result = await auth.login(username.value, password.value);
-    if (result.success) {
-        // Redirect to home or dashboard after successful login
-        window.location.href = '/';
-    } else {
-        error.value = result.message;
+    success.value = '';
+    if (password.value !== confirmPassword.value) {
+        error.value = 'Passwords do not match.';
+        return;
     }
-    loading.value = false;
+    loading.value = true;
+    try {
+        const response = await fetch(
+            `${import.meta.env.VITE_AUTH_ENDPOINT}/register`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: username.value,
+                    password: password.value
+                })
+            }
+        );
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || 'Registration failed');
+        }
+        success.value = 'Account created! You can now log in.';
+        setTimeout(() => router.push({ name: 'Login' }), 1200);
+    } catch (err) {
+        error.value = err.message;
+    } finally {
+        loading.value = false;
+    }
 }
 </script>
 
 <template>
-    <div class="login-container">
-        <form @submit.prevent="handleLogin" class="login-form">
-            <h2>Login</h2>
+    <div class="register-container">
+        <form @submit.prevent="handleRegister" class="register-form">
+            <h2>Create Account</h2>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input
@@ -44,30 +65,37 @@ async function handleLogin() {
                     v-model="password"
                     type="password"
                     required
-                    autocomplete="current-password"
+                    autocomplete="new-password"
+                />
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                    id="confirmPassword"
+                    v-model="confirmPassword"
+                    type="password"
+                    required
+                    autocomplete="new-password"
                 />
             </div>
             <button type="submit" :disabled="loading">
-                {{ loading ? 'Logging in...' : 'Login' }}
+                {{ loading ? 'Creating...' : 'Create Account' }}
             </button>
             <p v-if="error" class="error">{{ error }}</p>
-            <p class="register-link">
-                Don't have an account?
-                <router-link to="/register">Create one</router-link>
-            </p>
+            <p v-if="success" class="success">{{ success }}</p>
         </form>
     </div>
 </template>
 
 <style scoped lang="scss">
-.login-container {
+.register-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--color-background);
 }
-.login-form {
+.register-form {
     background: var(--color-surface);
     color: var(--color-text);
     border: 1px solid var(--color-secondary);
@@ -115,9 +143,9 @@ button:disabled {
     font-size: 0.95em;
     margin-top: 0.5rem;
 }
-.register-link {
-    font-size: 0.9em;
-    color: var(--color-primary);
-    text-align: center;
+.success {
+    color: #388e3c;
+    font-size: 0.95em;
+    margin-top: 0.5rem;
 }
 </style>

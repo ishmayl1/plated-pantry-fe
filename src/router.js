@@ -8,6 +8,11 @@ const routes = [
         component: () => import('@/components/LoginPage.vue') // <-- use @ alias for consistency
     },
     {
+        path: '/register',
+        name: 'Register',
+        component: () => import('@/components/RegisterPage.vue')
+    },
+    {
         path: '/',
         name: 'Home',
         component: () => import('@/components/HelloWorld.vue'),
