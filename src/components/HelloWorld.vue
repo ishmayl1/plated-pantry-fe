@@ -32,7 +32,7 @@ onMounted(() => {
     <h1>{{ msg }}</h1>
 
     <div class="card">
-        <ThemeToggleButton />
+        <ThemeToggleButton class="mb-5" />
         <p class="text-line">Time to swtich modes</p>
     </div>
 </template>

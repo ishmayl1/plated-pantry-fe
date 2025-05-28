@@ -1,12 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
 const routes = [
-  // Example route
-  {
-    path: '/',
-    name: 'Home',
-    component: () => import('./components/HelloWorld.vue'),
-  },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/components/LoginPage.vue') // <-- use @ alias for consistency
+    },
+    {
+        path: '/',
+        name: 'Home',
+        component: () => import('@/components/HelloWorld.vue'),
+        meta: { requiresAuth: true }
+    }
 ];
 
-export default routes;
+const router = createRouter({
+    history: createWebHistory(),
+    routes: routes // <-- fix: pass as 'routes', not just 'routes'
+});
+
+router.beforeEach((to, from, next) => {
+    const auth = useAuthStore();
+    if (to.meta.requiresAuth && !auth.isAuthenticated) {
+        next({ name: 'Login' });
+    } else {
+        next();
+    }
+});
+
+export default router;
