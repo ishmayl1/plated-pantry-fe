@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
 
-const auth = useAuthStore();
+const authStore = useAuthStore();
+const { user } = useUserStore();
 
 const isDark = ref(false);
 const menuOpen = ref(false);
@@ -24,7 +26,7 @@ function toggleTheme() {
 }
 
 function onLogout() {
-    auth.logout();
+    authStore.logout();
 }
 </script>
 
@@ -38,7 +40,7 @@ function onLogout() {
                         alt="User Avatar"
                     />
                 </v-avatar>
-                <span class="profile-name">Jamie Cook</span>
+                <span class="profile-name">{{ user.fullName }}</span>
                 <v-icon
                     size="20"
                     color="#49B583"

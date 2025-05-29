@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useUserStore } from '@/stores/user';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -7,32 +8,49 @@ export const useAuthStore = defineStore('auth', {
         success: ''
     }),
     actions: {
-        setToken(token) {
+        setToken(token, rememberMe) {
             this.token = token;
-            localStorage.setItem('jwt', token);
+            if (rememberMe) {
+                localStorage.setItem('jwt', token);
+                sessionStorage.removeItem('jwt');
+            } else {
+                sessionStorage.setItem('jwt', token);
+                localStorage.removeItem('jwt');
+            }
         },
         clearToken() {
             this.token = null;
             localStorage.removeItem('jwt');
+            sessionStorage.removeItem('jwt');
         },
         initialize() {
-            this.token = localStorage.getItem('jwt');
+            this.token =
+                localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+            const userStore = useUserStore();
+            userStore.initialize();
         },
-        async login(username, password) {
+        async login(email, password, rememberMe) {
             try {
                 const response = await fetch(
                     `${import.meta.env.VITE_AUTH_ENDPOINT}/login`,
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
+                        body: JSON.stringify({ email, password })
                     }
                 );
                 const data = await response.json();
+
                 if (!response.ok) {
                     throw new Error(data.message || 'Login failed');
                 }
-                this.setToken(data.token);
+                this.setToken(data.token, rememberMe);
+
+                // Save user data if present
+                if (data.user) {
+                    const userStore = useUserStore();
+                    userStore.setUser(data.user, rememberMe);
+                }
                 return { success: true };
             } catch (err) {
                 return { success: false, message: err.message };
@@ -79,6 +97,9 @@ export const useAuthStore = defineStore('auth', {
             localStorage.removeItem('user');
             this.token = null;
             this.user = null;
+            // Clear user store
+            const userStore = useUserStore();
+            userStore.clearUser();
             // Optionally, redirect to login or home page
             if (typeof window !== 'undefined') {
                 window.location.href = '/login';

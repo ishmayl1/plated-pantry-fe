@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import AppInput from '@/components/AppInput.vue';
 import AppButton from '@/components/AppButton.vue';
+import AppIconButton from '@/components/AppIconButton.vue';
 import { useInputValidation } from '@/composables/useInputValidation';
 
 const email = ref('');
@@ -92,6 +93,11 @@ async function handleRegister() {
 <template>
     <div class="register-container">
         <form @submit.prevent="handleRegister" class="register-form">
+            <div class="d-flex align-center justify-start back-btn">
+                <AppIconButton @click="router.push({ name: 'Login' })">
+                    mdi-arrow-left
+                </AppIconButton>
+            </div>
             <div class="mb-5">
                 <v-avatar
                     size="64"
@@ -180,7 +186,7 @@ async function handleRegister() {
                     >
                 </label>
             </div>
-            <v-divider class="mt-10"></v-divider>
+            <v-divider class="mt-5"></v-divider>
             <AppButton type="submit" :disabled="loading || !isFormValid">
                 {{ loading ? 'Creating...' : 'Create Account' }}
             </AppButton>
@@ -215,6 +221,13 @@ async function handleRegister() {
     width: 100%;
     max-width: 400px;
     align-items: stretch;
+    position: relative;
+}
+.back-btn {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 2;
 }
 .form-group {
     display: flex;
