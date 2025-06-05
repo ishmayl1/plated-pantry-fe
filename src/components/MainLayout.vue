@@ -4,6 +4,7 @@ import NavDrawer from '@/components/NavDrawer.vue';
 import HeroImageCard from '@/components/HeroImageCard.vue';
 import InstructionsCard from '@/components/InstructionsCard.vue';
 import AppBar from '@/components/AppBar.vue';
+import MainContent from '@/components/MainContent.vue';
 const steps = [
     'Boil pasta according to package instructions. Reserve 1 cup of pasta water.',
     'In a large pan, melt butter and sauté minced garlic until fragrant.',
@@ -20,19 +21,9 @@ const steps = [
             <v-main>
                 <v-container fluid class="pa-0 main-content-flex">
                     <AppBar />
-                    <!-- <v-row
-                        class="mt-8"
-                        align="stretch"
-                        justify="center"
-                        no-gutters
-                    >
-                        <v-col cols="12" lg="7" class="pr-lg-6 mb-6 mb-lg-0">
-                            <HeroImageCard />
-                        </v-col>
-                        <v-col cols="12" lg="5">
-                            <InstructionsCard :steps="steps" />
-                        </v-col>
-                    </v-row> -->
+                    <MainContent>
+                        <router-view />
+                    </MainContent>
                     <div class="footer-spacer" />
                     <v-footer
                         class="main-footer mt-12"

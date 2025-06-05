@@ -39,7 +39,6 @@ onMounted(() => {
         <v-spacer v-else />
         <ProfileMenu />
     </v-app-bar>
-
     <NavDrawer
         v-if="isMobile"
         ref="navDrawerRef"
@@ -55,7 +54,6 @@ onMounted(() => {
     min-height: 64px;
 
     color: var(--color-text) !important;
-    box-shadow: 0 1px 4px 0 rgba(40, 40, 60, 0.04);
     transition:
         background 0.2s,
         color 0.2s;

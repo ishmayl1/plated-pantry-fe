@@ -3,7 +3,7 @@
         v-if="!isMobile"
         :permanent="true"
         app
-        width="256"
+        width="356"
         class="navdrawer-responsive"
     >
         <v-list nav dense>
