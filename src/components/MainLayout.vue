@@ -78,4 +78,23 @@ const steps = [
 .v-application {
     font-family: 'Inter', sans-serif;
 }
+
+@media (max-width: 900px) {
+    .main-layout-flex {
+        flex-direction: column;
+    }
+    .main-content-flex {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+@media (max-width: 600px) {
+    .main-content-flex {
+        padding: 0 0.5rem !important;
+    }
+    .main-footer {
+        font-size: 0.85em;
+        padding-bottom: 1rem;
+    }
+}
 </style>

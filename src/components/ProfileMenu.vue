@@ -134,4 +134,41 @@ function onLogout() {
 .profile-menu-item.logout {
     color: var(--color-primary);
 }
+@media (max-width: 900px) {
+    .profile-menu-btn {
+        padding: 6px 10px 6px 8px;
+        gap: 0.5rem;
+    }
+    .profile-name {
+        font-size: 0.95rem;
+    }
+    .profile-avatar {
+        width: 32px !important;
+        height: 32px !important;
+    }
+}
+@media (max-width: 600px) {
+    .profile-menu-btn {
+        padding: 4px 8px 4px 6px;
+        gap: 0.4rem;
+    }
+    .profile-name {
+        font-size: 0.9rem;
+        display: none;
+    }
+    .profile-avatar {
+        width: 28px !important;
+        height: 28px !important;
+    }
+    .profile-chevron {
+        margin-left: 0;
+    }
+    .profile-menu-content {
+        min-width: 140px !important;
+    }
+    .profile-menu-item {
+        padding: 8px 12px;
+        font-size: 0.97em;
+    }
+}
 </style>

@@ -1,5 +1,12 @@
 <template>
-    <v-navigation-drawer app permanent width="256">
+    <v-navigation-drawer
+        v-if="!isMobile"
+        v-model="drawerOpen"
+        :permanent="true"
+        app
+        width="256"
+        class="navdrawer-responsive"
+    >
         <v-list nav dense>
             <v-list-item class="py-6 nav-header-item">
                 <v-avatar
@@ -49,10 +56,109 @@
             <v-spacer />
         </v-list>
     </v-navigation-drawer>
+    <v-navigation-drawer
+        v-else-if="isMobile && drawerOpen"
+        v-model="drawerOpen"
+        :permanent="false"
+        :temporary="true"
+        app
+        width="256"
+        class="navdrawer-responsive"
+        @click:outside="drawerOpen = false"
+    >
+        <v-list nav dense>
+            <v-list-item
+                class="nav-list-item"
+                style="margin-top: 64px"
+                value="dashboard"
+                active
+            >
+                <template #prepend>
+                    <v-icon>mdi-home</v-icon>
+                </template>
+                <div class="nav-list-title">Dashboard</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="plans">
+                <template #prepend>
+                    <v-icon>mdi-format-list-bulleted</v-icon>
+                </template>
+                <div class="nav-list-title">My Plans</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="orders">
+                <template #prepend>
+                    <v-icon>mdi-bag-personal</v-icon>
+                </template>
+                <div class="nav-list-title">Orders</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="recipes">
+                <template #prepend>
+                    <v-icon>mdi-book-open-page-variant</v-icon>
+                </template>
+                <div class="nav-list-title">Recipes</div>
+            </v-list-item>
+            <v-list-item class="nav-list-item" value="support">
+                <template #prepend>
+                    <v-icon>mdi-headset</v-icon>
+                </template>
+                <div class="nav-list-title">Support</div>
+            </v-list-item>
+            <v-spacer />
+        </v-list>
+    </v-navigation-drawer>
 </template>
 
 <script setup>
+import {
+    ref,
+    onMounted,
+    onUnmounted,
+    watch,
+    defineProps,
+    defineEmits
+} from 'vue';
 import AppSvgIcon from '@/components/AppSvgIcon.vue';
+
+const props = defineProps({
+    drawerOpen: Boolean,
+    isMobile: Boolean
+});
+const emit = defineEmits(['update:drawerOpen', 'update:isMobile']);
+
+const drawerOpen = ref(props.drawerOpen);
+const isMobile = ref(props.isMobile);
+
+function checkMobile() {
+    isMobile.value = window.innerWidth <= 768;
+    emit('update:isMobile', isMobile.value);
+    if (isMobile.value) {
+        drawerOpen.value = false;
+        emit('update:drawerOpen', false);
+    } else {
+        drawerOpen.value = true;
+        emit('update:drawerOpen', true);
+    }
+}
+
+onMounted(() => {
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+});
+onUnmounted(() => {
+    window.removeEventListener('resize', checkMobile);
+});
+
+watch(
+    () => props.drawerOpen,
+    (val) => {
+        drawerOpen.value = val;
+    }
+);
+watch(
+    () => props.isMobile,
+    (val) => {
+        isMobile.value = val;
+    }
+);
 </script>
 
 <style scoped>
@@ -65,6 +171,75 @@ import AppSvgIcon from '@/components/AppSvgIcon.vue';
     box-shadow:
         0 4px 24px 0 rgba(40, 40, 60, 0.18),
         0 1.5px 4px 0 rgba(40, 40, 60, 0.1);
+    width: 256px;
+    min-width: 200px;
+    max-width: 100vw;
+}
+@media (max-width: 768px) {
+    .v-navigation-drawer {
+        width: 100vw !important;
+        min-width: 0 !important;
+        max-width: 100vw !important;
+        position: fixed !important;
+        left: 0;
+        top: 0;
+        height: 100vh !important;
+        z-index: 1200;
+        border-radius: 0 !important;
+    }
+    .v-navigation-drawer .v-list {
+        align-items: center;
+    }
+    .v-navigation-drawer .nav-list-item {
+        justify-content: flex-start !important;
+        text-align: left;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .v-navigation-drawer .nav-list-title {
+        text-align: left !important;
+        margin-left: 8px !important;
+    }
+    .nav-header-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 12px 8px !important;
+    }
+    .nav-header-avatar {
+        margin-bottom: 0 !important;
+        margin-right: 12px;
+    }
+    .nav-header-title {
+        font-size: 1.1rem !important;
+        margin-top: 0 !important;
+    }
+    .nav-list-item {
+        padding: 10px 8px !important;
+        font-size: 1rem !important;
+    }
+}
+@media (max-width: 480px) {
+    .v-navigation-drawer {
+        width: 100vw !important;
+        min-width: 0 !important;
+        max-width: 100vw !important;
+        padding: 0 !important;
+    }
+    .nav-header-title {
+        font-size: 1rem !important;
+    }
+    .nav-list-title {
+        font-size: 0.95rem !important;
+    }
+    .v-avatar {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    .brand-font {
+        font-size: 1.1rem !important;
+    }
 }
 .v-navigation-drawer a,
 .v-navigation-drawer .v-list-item__content {
