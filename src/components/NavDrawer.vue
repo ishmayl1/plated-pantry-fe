@@ -3,7 +3,7 @@
         v-if="!isMobile"
         :permanent="true"
         app
-        width="356"
+        width="256"
         class="navdrawer-responsive"
     >
         <v-list nav dense>
@@ -22,31 +22,56 @@
                 </div>
             </v-list-item>
             <v-divider class="my-2" />
-            <v-list-item class="nav-list-item" value="dashboard" active>
+            <v-list-item
+                class="nav-list-item"
+                value="dashboard"
+                :active="$route.name === 'Dashboard'"
+                @click="$router.push({ name: 'Dashboard' })"
+            >
                 <template #prepend>
                     <v-icon>mdi-home</v-icon>
                 </template>
                 <div class="nav-list-title">Dashboard</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="plans">
+            <v-list-item
+                class="nav-list-item"
+                value="plans"
+                :active="$route.name === 'Plans'"
+                @click="$router.push({ name: 'Plans' })"
+            >
                 <template #prepend>
                     <v-icon>mdi-format-list-bulleted</v-icon>
                 </template>
                 <div class="nav-list-title">My Plans</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="orders">
+            <v-list-item
+                class="nav-list-item"
+                value="orders"
+                :active="$route.name === 'Orders'"
+                @click="$router.push({ name: 'Orders' })"
+            >
                 <template #prepend>
                     <v-icon>mdi-bag-personal</v-icon>
                 </template>
                 <div class="nav-list-title">Orders</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="recipes">
+            <v-list-item
+                class="nav-list-item"
+                value="recipes"
+                :active="$route.name === 'Recipes'"
+                @click="$router.push({ name: 'Recipes' })"
+            >
                 <template #prepend>
                     <v-icon>mdi-book-open-page-variant</v-icon>
                 </template>
                 <div class="nav-list-title">Recipes</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="support">
+            <v-list-item
+                class="nav-list-item"
+                value="support"
+                :active="$route.name === 'Support'"
+                @click="$router.push({ name: 'Support' })"
+            >
                 <template #prepend>
                     <v-icon>mdi-headset</v-icon>
                 </template>
@@ -70,32 +95,68 @@
                 class="nav-list-item"
                 style="margin-top: 10vh"
                 value="dashboard"
-                active
+                :active="$route.name === 'Dashboard'"
+                @click="
+                    $router.push({ name: 'Dashboard' });
+                    drawerOpen = false;
+                "
             >
                 <template #prepend>
                     <v-icon>mdi-home</v-icon>
                 </template>
                 <div class="nav-list-title">Dashboard</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="plans">
+            <v-list-item
+                class="nav-list-item"
+                value="plans"
+                :active="$route.name === 'Plans'"
+                @click="
+                    $router.push({ name: 'Plans' });
+                    drawerOpen = false;
+                "
+            >
                 <template #prepend>
                     <v-icon>mdi-format-list-bulleted</v-icon>
                 </template>
                 <div class="nav-list-title">My Plans</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="orders">
+            <v-list-item
+                class="nav-list-item"
+                value="orders"
+                :active="$route.name === 'Orders'"
+                @click="
+                    $router.push({ name: 'Orders' });
+                    drawerOpen = false;
+                "
+            >
                 <template #prepend>
                     <v-icon>mdi-bag-personal</v-icon>
                 </template>
                 <div class="nav-list-title">Orders</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="recipes">
+            <v-list-item
+                class="nav-list-item"
+                value="recipes"
+                :active="$route.name === 'Recipes'"
+                @click="
+                    $router.push({ name: 'Recipes' });
+                    drawerOpen = false;
+                "
+            >
                 <template #prepend>
                     <v-icon>mdi-book-open-page-variant</v-icon>
                 </template>
                 <div class="nav-list-title">Recipes</div>
             </v-list-item>
-            <v-list-item class="nav-list-item" value="support">
+            <v-list-item
+                class="nav-list-item"
+                value="support"
+                :active="$route.name === 'Support'"
+                @click="
+                    $router.push({ name: 'Support' });
+                    drawerOpen = false;
+                "
+            >
                 <template #prepend>
                     <v-icon>mdi-headset</v-icon>
                 </template>

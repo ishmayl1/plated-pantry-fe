@@ -14,8 +14,32 @@ const routes = [
     },
     {
         path: '/',
-        name: 'Home',
+        name: 'Dashboard',
         component: () => import('@/components/MainLayout.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/plans',
+        name: 'Plans',
+        component: () => import('@/components/Plans.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/orders',
+        name: 'Orders',
+        component: () => import('@/components/Orders.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/recipes',
+        name: 'Recipes',
+        component: () => import('@/components/Recipes.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/support',
+        name: 'Support',
+        component: () => import('@/components/Support.vue'),
         meta: { requiresAuth: true }
     }
 ];
