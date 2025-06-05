@@ -1,7 +1,8 @@
 // src/composables/useDevice.js
 import { ref, onMounted, onUnmounted } from 'vue';
 
-const isMobile = ref(false);
+const isMobile = ref(window.innerWidth <= 768);
+let listener = null;
 
 function checkMobile() {
     isMobile.value = window.innerWidth <= 768;
@@ -10,11 +11,11 @@ function checkMobile() {
 export function useDevice() {
     onMounted(() => {
         checkMobile();
-        window.addEventListener('resize', checkMobile);
+        listener = () => checkMobile();
+        window.addEventListener('resize', listener);
     });
     onUnmounted(() => {
-        window.removeEventListener('resize', checkMobile);
+        if (listener) window.removeEventListener('resize', listener);
     });
-
     return { isMobile };
 }
