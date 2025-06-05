@@ -27,5 +27,16 @@ export default defineConfig([
         files: ['**/*.md'],
         plugins: { markdown },
         language: 'markdown/commonmark'
+    },
+    {
+        files: ['*.svg'],
+        options: {
+            parser: 'html',
+            printWidth: 120,
+            tabWidth: 2,
+            singleQuote: false,
+            bracketSameLine: false,
+            semi: false
+        }
     }
 ]);

@@ -3,16 +3,14 @@
         <v-list nav dense>
             <v-list-item class="py-6 nav-header-item">
                 <v-avatar
-                    size="48"
+                    size="72"
                     class="mb-2 nav-header-avatar"
                     color="#ffe4e1"
                 >
-                    <v-icon size="x-large" color="#f57274"
-                        >mdi-silverware-variant</v-icon
-                    >
+                    <AppSvgIcon name="basket" :size="48" color="#f57274" />
                 </v-avatar>
                 <div
-                    class="font-weight-bold text-h6 mt-2 nav-header-title brand-font"
+                    class="font-weight-bold text-h5 mt-2 nav-header-title brand-font"
                 >
                     Plated Pantry
                 </div>
@@ -54,7 +52,7 @@
 </template>
 
 <script setup>
-// No script needed for static nav drawer
+import AppSvgIcon from '@/components/AppSvgIcon.vue';
 </script>
 
 <style scoped>

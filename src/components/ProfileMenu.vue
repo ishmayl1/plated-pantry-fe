@@ -51,25 +51,29 @@ function onLogout() {
                 </v-icon>
             </button>
         </template>
-        <v-list class="py-0">
+        <v-list class="py-0 profile-menu-content">
             <v-list-item class="profile-menu-item">
-                <v-icon size="20" color="#FF6B6B" class="mr-2"
-                    >mdi-account</v-icon
-                >
+                <v-icon size="20" color="#FF6B6B" class="mr-2">
+                    mdi-account
+                </v-icon>
                 <span>My Profile</span>
             </v-list-item>
             <v-list-item class="profile-menu-item">
-                <v-icon size="20" color="#49B583" class="mr-2">mdi-cog</v-icon>
+                <v-icon size="20" color="#49B583" class="mr-2">
+                    mdi-cog
+                </v-icon>
                 <span>Settings</span>
             </v-list-item>
             <v-list-item class="profile-menu-item" @click="toggleTheme">
-                <v-icon size="20" color="#7f40bf" class="mr-2"
-                    >mdi-theme-light-dark</v-icon
-                >
+                <v-icon size="20" color="#7f40bf" class="mr-2">
+                    mdi-theme-light-dark
+                </v-icon>
                 <span>{{ isDark ? 'Light Mode' : 'Dark Mode' }}</span>
             </v-list-item>
             <v-list-item class="profile-menu-item logout" @click="onLogout">
-                <v-icon size="20" class="mr-2 icon-primary">mdi-logout</v-icon>
+                <v-icon size="20" class="mr-2 icon-primary">
+                    mdi-logout
+                </v-icon>
                 <span>Log Out</span>
             </v-list-item>
         </v-list>
@@ -92,8 +96,8 @@ function onLogout() {
         border 0.18s;
 }
 .profile-menu-btn:hover {
-    background: #fff1e6;
-    border-color: #fff1e6;
+    background: var(--color-light-charcoal);
+    border-color: var(--color-light-charcoal);
 }
 .profile-avatar {
     border: 2px solid var(--color-primary);
@@ -109,6 +113,10 @@ function onLogout() {
     transition: transform 0.18s;
     color: var(--color-action);
 }
+.profile-menu-content {
+    background: var(--color-menu-bg) !important;
+    color: var(--color-text) !important;
+}
 .profile-menu-item {
     display: flex;
     align-items: center;
@@ -121,7 +129,7 @@ function onLogout() {
     cursor: pointer;
 }
 .profile-menu-item:hover {
-    background: #fff1e6;
+    background: var(--color-light-charcoal);
 }
 .profile-menu-item.logout {
     color: var(--color-primary);

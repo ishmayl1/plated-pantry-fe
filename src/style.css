@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import './scss/_svg-icons.scss';
 
 /* Modern CSS Reset */
 html,
@@ -139,6 +140,8 @@ html.light-mode {
     --color-action: #49b583;
     --color-navdrawer-bg: #fff;
     --color-navdrawer-text: #222;
+    --color-menu-bg: #fff; /* Light mode v-menu background */
+    --color-profile-menu-hover: #1a1a1a;
     color-scheme: light;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -154,6 +157,8 @@ html.dark-mode {
     --color-text: #e7e7e7;
     --color-navdrawer-bg: #23232a;
     --color-navdrawer-text: #e7e7e7;
+    --color-menu-bg: #18141c; /* Dark mode v-menu background */
+    --color-profile-menu-hover: #fff1e6;
     color-scheme: dark;
 }
 
