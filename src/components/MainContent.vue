@@ -10,14 +10,14 @@
 
 <style scoped>
 .main-content-wrapper {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 80%;
+    max-width: 1800px;
+    margin: 6vh auto 0px;
     padding: 2rem 1rem;
     box-sizing: border-box;
     min-height: 80vh;
     display: flex;
-    justify-content: center;
+
     flex-direction: column;
 }
 @media (max-width: 900px) {

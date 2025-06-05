@@ -99,6 +99,7 @@
                 @click="
                     $router.push({ name: 'Dashboard' });
                     drawerOpen = false;
+                    emit('update:drawerOpen', false);
                 "
             >
                 <template #prepend>
@@ -113,6 +114,7 @@
                 @click="
                     $router.push({ name: 'Plans' });
                     drawerOpen = false;
+                    emit('update:drawerOpen', false);
                 "
             >
                 <template #prepend>
@@ -127,6 +129,7 @@
                 @click="
                     $router.push({ name: 'Orders' });
                     drawerOpen = false;
+                    emit('update:drawerOpen', false);
                 "
             >
                 <template #prepend>
@@ -141,6 +144,7 @@
                 @click="
                     $router.push({ name: 'Recipes' });
                     drawerOpen = false;
+                    emit('update:drawerOpen', false);
                 "
             >
                 <template #prepend>
@@ -155,6 +159,7 @@
                 @click="
                     $router.push({ name: 'Support' });
                     drawerOpen = false;
+                    emit('update:drawerOpen', false);
                 "
             >
                 <template #prepend>

@@ -24,12 +24,8 @@ const steps = [
                     <MainContent>
                         <router-view />
                     </MainContent>
-                    <div class="footer-spacer" />
-                    <v-footer
-                        class="main-footer mt-12"
-                        color="transparent"
-                        padless
-                    >
+
+                    <v-footer class="main-footer" color="transparent" padless>
                         <v-col class="text-center text-caption" cols="12"
                             >© 2025 Plated Pantry. All rights reserved.</v-col
                         >
@@ -49,7 +45,7 @@ const steps = [
 .main-content-flex {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100%;
     flex: 1;
     padding: 0;
 }
