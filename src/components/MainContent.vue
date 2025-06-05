@@ -11,7 +11,7 @@
 <style scoped>
 .main-content-wrapper {
     width: 80%;
-    max-width: 1800px;
+    max-width: 1600px;
     margin: 6vh auto 0px;
     padding: 2rem 1rem;
     box-sizing: border-box;

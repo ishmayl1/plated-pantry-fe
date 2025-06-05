@@ -134,7 +134,12 @@ html.light-mode {
     font-weight: 400;
     --color-primary: #f57274;
     --color-secondary: #c78f58;
-    --color-background: #fff8f0;
+    --color-background: linear-gradient(
+        135deg,
+        #fff8f0 0%,
+        #fbeee0 20%,
+        #fff8f0 100%
+    );
     --color-surface: #fff;
     --color-text: #111;
     --color-action: #49b583;
@@ -219,4 +224,10 @@ button:focus-visible {
     letter-spacing: 0.5px;
     font-weight: 700;
     font-size: 1.5rem;
+}
+
+.profile-menu-btn:focus,
+.profile-menu-btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
