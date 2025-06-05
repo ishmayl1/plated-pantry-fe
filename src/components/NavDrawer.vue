@@ -68,7 +68,7 @@
         <v-list nav dense>
             <v-list-item
                 class="nav-list-item"
-                style="margin-top: 64px"
+                style="margin-top: 10vh"
                 value="dashboard"
                 active
             >
@@ -148,13 +148,29 @@ watch(
         max-width: 100vw !important;
         position: fixed !important;
         left: 0;
-        top: 0;
-        height: 100vh !important;
-        z-index: 1200;
-        border-radius: 0 !important;
+        top: 0 !important;
+        min-height: 100vh !important;
+        max-height: 100vh !important;
+        /* Remove any margin or padding from parent and children */
+        margin: 0 !important;
+        padding: 0 !important;
     }
-    .v-navigation-drawer .v-list {
-        align-items: center;
+    .v-navigation-drawer .v-list,
+    .v-navigation-drawer__content {
+        margin: 0 !important;
+        padding: 0 !important;
+        padding-top: 0 !important;
+    }
+    .nav-header-item {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .v-navigation-drawer .nav-list {
+        align-items: flex-start;
+        margin-top: 0 !important;
+        flex: 1 1 auto;
+        height: 100%;
+        padding-top: 0 !important;
     }
     .v-navigation-drawer .nav-list-item {
         justify-content: flex-start !important;
@@ -192,6 +208,21 @@ watch(
         min-width: 0 !important;
         max-width: 100vw !important;
         padding: 0 !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .v-navigation-drawer .v-list,
+    .v-navigation-drawer__content {
+        margin: 0 !important;
+        padding: 0 !important;
+        padding-top: 0 !important;
+    }
+    .nav-header-item {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
     }
     .nav-header-title {
         font-size: 1rem !important;

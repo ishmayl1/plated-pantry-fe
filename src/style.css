@@ -155,7 +155,7 @@ html.dark-mode {
     --color-action: #49b583;
     --color-surface: #1a1a1a;
     --color-text: #e7e7e7;
-    --color-navdrawer-bg: #23232a;
+    --color-navdrawer-bg: rgba(14, 13, 21, 0.5);
     --color-navdrawer-text: #e7e7e7;
     --color-menu-bg: #18141c; /* Dark mode v-menu background */
     --color-profile-menu-hover: #fff1e6;
