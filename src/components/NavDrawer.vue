@@ -1,7 +1,6 @@
 <template>
     <v-navigation-drawer
         v-if="!isMobile"
-        v-model="drawerOpen"
         :permanent="true"
         app
         width="256"
@@ -108,55 +107,22 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    onMounted,
-    onUnmounted,
-    watch,
-    defineProps,
-    defineEmits
-} from 'vue';
+import { ref, watch, defineProps, defineEmits } from 'vue';
 import AppSvgIcon from '@/components/AppSvgIcon.vue';
+import { useDevice } from '@/composables/useDevice.js';
 
 const props = defineProps({
-    drawerOpen: Boolean,
-    isMobile: Boolean
+    drawerOpen: Boolean
 });
-const emit = defineEmits(['update:drawerOpen', 'update:isMobile']);
+const emit = defineEmits(['update:drawerOpen']);
 
+const { isMobile } = useDevice();
 const drawerOpen = ref(props.drawerOpen);
-const isMobile = ref(props.isMobile);
-
-function checkMobile() {
-    isMobile.value = window.innerWidth <= 768;
-    emit('update:isMobile', isMobile.value);
-    if (isMobile.value) {
-        drawerOpen.value = false;
-        emit('update:drawerOpen', false);
-    } else {
-        drawerOpen.value = true;
-        emit('update:drawerOpen', true);
-    }
-}
-
-onMounted(() => {
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-});
-onUnmounted(() => {
-    window.removeEventListener('resize', checkMobile);
-});
 
 watch(
     () => props.drawerOpen,
     (val) => {
         drawerOpen.value = val;
-    }
-);
-watch(
-    () => props.isMobile,
-    (val) => {
-        isMobile.value = val;
     }
 );
 </script>

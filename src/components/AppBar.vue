@@ -1,26 +1,21 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import ProfileMenu from '@/components/ProfileMenu.vue';
 import NavDrawer from '@/components/NavDrawer.vue';
-import AppSvgIcon from '@/components/AppSvgIcon.vue'; // Import the AppSvgIcon component
+import AppSvgIcon from '@/components/AppSvgIcon.vue';
+import { useDevice } from '@/composables/useDevice.js';
 
-// Reference to NavDrawer instance
 const navDrawerRef = ref(null);
-const isMobile = ref(false);
+const { isMobile } = useDevice();
 const drawerOpen = ref(true);
 
-function checkMobile() {
-    isMobile.value = window.innerWidth <= 768;
+function checkDrawer() {
     if (isMobile.value) drawerOpen.value = false;
     else drawerOpen.value = true;
 }
 
 onMounted(() => {
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-});
-onUnmounted(() => {
-    window.removeEventListener('resize', checkMobile);
+    checkDrawer();
 });
 </script>
 
@@ -36,7 +31,7 @@ onUnmounted(() => {
             <v-icon v-else>mdi-close</v-icon>
         </v-btn>
         <div v-if="isMobile" class="mobile-brand-center">
-            <AppSvgIcon name="basket" :size="36" color="#f57274" class="mr-2" />
+            <!-- <AppSvgIcon name="basket" :size="36" color="#f57274" class="mr-2" /> -->
             <span class="font-weight-bold brand-font mobile-brand-title">
                 Plated Pantry
             </span>
