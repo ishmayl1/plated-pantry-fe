@@ -20,7 +20,7 @@ const routes = [
             {
                 path: '',
                 name: 'Dashboard',
-                component: () => import('@/components/HelloWorld.vue') // Replace with Dashboard.vue if available
+                component: () => import('@/components/DashboardComponent.vue') // Replace with Dashboard.vue if available
             },
             {
                 path: 'plans',

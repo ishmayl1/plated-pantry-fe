@@ -1,6 +1,6 @@
 <script setup>
 import { computed, watchEffect, ref } from 'vue';
-import { svgIcons } from '@/utils/svgIcons';
+import { svgIcons } from '@/configs/svgIcons';
 
 const props = defineProps({
     name: { type: String, required: true },

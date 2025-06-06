@@ -12,7 +12,7 @@
 .main-content-wrapper {
     width: 80%;
     max-width: 1600px;
-    margin: 6vh auto 0px;
+    margin: 2vh auto 0px;
     padding: 2rem 1rem;
     box-sizing: border-box;
     min-height: 80vh;
@@ -23,6 +23,8 @@
 @media (max-width: 900px) {
     .main-content-wrapper {
         padding: 1.2rem 0.5rem;
+        margin: 0 0;
+        width: 100%;
     }
 }
 </style>
