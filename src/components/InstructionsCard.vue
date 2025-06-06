@@ -1,4 +1,7 @@
 <script setup>
+import AppButton from '@/components/AppButton.vue';
+import AppCard from '@/components/AppCard.vue';
+
 const props = defineProps({
     steps: {
         type: Array,
@@ -12,7 +15,7 @@ function printRecipe() {
 </script>
 
 <template>
-    <v-card rounded="xl" elevation="4" class="pa-6">
+    <app-card darkLevel="3" class="pa-6">
         <div class="text-h6 font-weight-bold mb-4">Instructions</div>
         <v-timeline align="start" dense>
             <v-timeline-item
@@ -25,16 +28,31 @@ function printRecipe() {
                 <div>{{ step }}</div>
             </v-timeline-item>
         </v-timeline>
-        <v-btn
+        <app-button
             @click="printRecipe"
-            style="background-color: var(--color-secondary)"
-            class="mt-6"
+            color="secondary"
+            class="mt-12"
             block
             rounded="xl"
-            size="large"
-            prepend-icon="mdi-printer"
+            size="medium"
+            style="font-weight: 600"
         >
-            Print Recipe
-        </v-btn>
-    </v-card>
+            <template #default>
+                <v-icon left size="20">mdi-printer</v-icon>
+                Print Recipe
+            </template>
+        </app-button>
+    </app-card>
 </template>
+
+<style lang="scss">
+html.dark-mode .v-timeline .v-timeline-divider__dot {
+    background: #f6cbcb !important;
+}
+html.dark-mode .v-timeline-divider__before {
+    background-color: #fff !important;
+}
+html.dark-mode .v-timeline-divider__after {
+    background-color: #fff !important;
+}
+</style>

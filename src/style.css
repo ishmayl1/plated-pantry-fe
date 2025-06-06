@@ -135,7 +135,7 @@ html.light-mode {
     --color-primary: #e50046;
     --color-secondary: #c7db9c;
     --color-yellow: #fff0bd;
-    --color-peach: #fdab9e;
+    --color-peach: #ffe4e1;
     --color-background: #f7faef;
     --color-surface: #fff;
     --color-text: #111;
@@ -154,7 +154,7 @@ html.dark-mode {
     --color-primary: #f57274;
     --color-secondary: #c7db9c;
     --color-yellow: #fff0bd;
-    --color-peach: #fdab9e;
+    --color-peach: #ffe4e1;
     --color-background: #242424;
     --color-action: #49b583;
     --color-surface: #1a1a1a;
