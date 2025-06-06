@@ -24,14 +24,17 @@ onMounted(() => {
         <div v-else-if="error" class="text-center text-error py-8">
             {{ error }}
         </div>
-        <div v-else class="recipes-grid-view">
-            <div
-                v-for="recipe in recipes"
-                :key="recipe.id || recipe._id"
-                class="recipe-card"
-                @click="viewRecipe(recipe)"
-            >
-                <div class="recipe-card-img-wrapper">
+        <div v-else>
+            <div>
+                <span class="text-h4">What are we cooking tonight?</span>
+            </div>
+            <div class="recipes-grid-view">
+                <div
+                    v-for="recipe in recipes"
+                    :key="recipe.id || recipe._id"
+                    @click="viewRecipe(recipe)"
+                    class="recipe-card-img-wrapper"
+                >
                     <img
                         :src="
                             recipe.imageUrl ||
@@ -40,63 +43,12 @@ onMounted(() => {
                         alt="Recipe image"
                         class="recipe-card-img"
                     />
-                </div>
-                <div class="recipe-card-content">
-                    <!-- <div class="recipe-card-category">
-                        {{ recipe.category || 'Healthy Meals' }}
-                    </div> -->
-                    <div class="recipe-card-title">
-                        {{ recipe.title || recipe.name }}
-                    </div>
-                    <!-- <div class="recipe-card-desc">
-                        {{
-                            recipe.description ||
-                            recipe.subtitle ||
-                            'With Bread and Roasted Berries'
-                        }}
-                    </div> -->
-                    <div class="recipe-card-meta">
-                        <span v-if="recipe.cookTime">
-                            <b>{{ recipe.cookTime }}</b>
-                        </span>
-                        <span v-if="recipe.calories">
-                            &nbsp; <b>{{ recipe.calories }}</b> Calories
-                        </span>
-                        <span v-if="recipe.ingredients">
-                            &nbsp;
-                            <b>{{ recipe.ingredients.length }}</b> Ingredients
-                        </span>
-                    </div>
-                    <!-- <div class="recipe-card-rating">
-                        <span class="star" v-for="i in 5" :key="i">
-                            <v-icon
-                                :color="
-                                    i <= (recipe.rating || 4)
-                                        ? 'yellow'
-                                        : '#eee'
-                                "
-                                size="18"
-                            >
-                                mdi-star
-                            </v-icon>
-                        </span>
-                        <span class="rating-count">
-                            {{ recipe.ratingCount || 29 }}
-                        </span>
-                    </div> -->
-                    <div class="recipe-card-actions">
-                        <AppButton
-                            color="primary"
-                            @click.stop="viewRecipe(recipe)"
-                        >
-                            View Recipe
-                        </AppButton>
-                        <AppButton type="text"> Add to Collection </AppButton>
+                    <div
+                        class="recipe-card-name-bar d-flex align-center justify-center"
+                    >
+                        {{ recipe.name || 'Recipe' }}
                     </div>
                 </div>
-                <v-icon class="recipe-card-fav" color="var(--color-primary)">
-                    mdi-heart
-                </v-icon>
             </div>
         </div>
     </div>
@@ -105,13 +57,13 @@ onMounted(() => {
 <style scoped>
 .recipes-grid-view {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    grid-template-columns: repeat(auto-fit, 1fr);
     gap: 2.2rem 2.2rem;
     margin: 2rem 0;
 }
 .recipe-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: stretch;
     background: var(--color-surface);
     border-radius: 24px;
@@ -123,104 +75,111 @@ onMounted(() => {
     transition:
         box-shadow 0.18s,
         background 0.18s;
+    padding: 0;
 }
 .recipe-card:hover {
     background: var(--color-secondary);
     box-shadow: 0 6px 24px rgba(127, 64, 191, 0.13);
 }
 .recipe-card-img-wrapper {
-    flex: 0 0 200px;
+    width: 100%;
+    aspect-ratio: 1/1;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     background: #fafafa;
-    min-width: 200px;
-    max-width: 220px;
-    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px 24px 24px 24px;
+}
+html.dark-mode .recipe-card-img-wrapper {
+    background: #232323;
 }
 .recipe-card-img {
-    width: 180px;
-    height: 180px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 18px;
-    box-shadow: 0 2px 8px rgba(127, 64, 191, 0.06);
+    border-radius: 0 0 0 0;
+    display: block;
+}
+.recipe-card-name-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-secondary);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    height: 4rem;
+    line-height: 2.8rem;
+    padding: 0;
+    border-radius: 0 0 24px 24px;
+    letter-spacing: 0.02em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
 }
 .recipe-card-content {
     flex: 1 1 auto;
-    padding: 2.2rem 2rem 1.2rem 2rem;
+    padding: 1.2rem 1rem 1.2rem 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.5rem;
-}
-.recipe-card-category {
-    font-size: 0.85rem;
-    color: #aaa;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 0.2rem;
+    align-items: flex-start;
 }
 .recipe-card-title {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--color-primary);
     margin-bottom: 0.1rem;
-}
-.recipe-card-desc {
-    font-size: 1.05rem;
-    color: #666;
-    margin-bottom: 0.7rem;
+    margin-top: 0.2rem;
+    text-align: left;
 }
 .recipe-card-meta {
-    font-size: 1.05rem;
-    color: #222;
+    font-size: 0.98rem;
+    color: var(--color-text);
     margin-bottom: 0.7rem;
     display: flex;
-    gap: 1.2rem;
-}
-.recipe-card-rating {
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    margin-bottom: 1.1rem;
-}
-.star {
-    margin-right: 1px;
-}
-.rating-count {
-    font-size: 0.98rem;
-    color: #aaa;
-    margin-left: 0.5rem;
+    gap: 0.7rem;
+    flex-wrap: wrap;
 }
 .recipe-card-actions {
     display: flex;
-    gap: 1.2rem;
+    gap: 0.7rem;
     margin-top: 0.5rem;
 }
 .recipe-card-fav {
     position: absolute;
-    top: 18px;
-    right: 22px;
-    font-size: 2rem;
+    top: 14px;
+    right: 18px;
+    font-size: 1.5rem;
     opacity: 0.85;
+}
+@media (min-width: 1200px) {
+    .recipes-grid-view {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+}
+@media (max-width: 900px) {
+    .recipes-grid-view {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .recipe-card-img-wrapper {
+        aspect-ratio: 1/1;
+        height: auto;
+    }
 }
 @media (max-width: 700px) {
     .recipes-grid-view {
         grid-template-columns: 1fr;
     }
-    .recipe-card {
-        flex-direction: column;
-        min-width: 0;
-    }
     .recipe-card-img-wrapper {
-        min-width: 100%;
-        max-width: 100%;
-        justify-content: center;
-    }
-    .recipe-card-img {
-        width: 100%;
-        height: 180px;
-        border-radius: 18px 18px 0 0;
+        aspect-ratio: 1/1;
+        height: auto;
     }
     .recipe-card-content {
         padding: 1.2rem 1rem 1.2rem 1rem;
