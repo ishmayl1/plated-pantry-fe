@@ -1,16 +1,23 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+
+import LoadingAnimation from '@/components/LoadingAnimation.vue';
+
 import { storeToRefs } from 'pinia';
 import { useRecipesStore } from '@/stores/recipes.js';
-import AppCard from '@/components/AppCard.vue';
-import AppButton from '@/components/AppButton.vue';
 
 const recipesStore = useRecipesStore();
 const { recipes, loading, error } = storeToRefs(recipesStore);
 
+const loadedImages = ref({});
+
 function viewRecipe(recipe) {
     // Replace with actual navigation logic, e.g. router.push({ name: 'RecipeDetail', params: { id: recipe.id } })
     alert(`View recipe: ${recipe.title || recipe.name || recipe.id}`);
+}
+
+function onImgLoad(id) {
+    loadedImages.value[id] = true;
 }
 
 onMounted(() => {
@@ -20,7 +27,9 @@ onMounted(() => {
 
 <template>
     <div>
-        <div v-if="loading" class="text-center py-8">Loading recipes...</div>
+        <div v-if="loading" class="text-center py-8">
+            <LoadingAnimation />
+        </div>
         <div v-else-if="error" class="text-center text-error py-8">
             {{ error }}
         </div>
@@ -30,6 +39,7 @@ onMounted(() => {
                 :key="recipe.id || recipe._id"
                 @click="viewRecipe(recipe)"
                 class="recipe-card-img-wrapper"
+                :class="{ loaded: loadedImages[recipe.id || recipe._id] }"
             >
                 <img
                     :src="
@@ -38,6 +48,7 @@ onMounted(() => {
                     "
                     alt="Recipe image"
                     class="recipe-card-img"
+                    @load="onImgLoad(recipe.id || recipe._id)"
                 />
                 <div
                     class="recipe-card-name-bar d-flex align-center justify-center px-2"
@@ -67,9 +78,14 @@ onMounted(() => {
     position: relative;
     overflow: hidden;
     border-radius: 24px 24px 24px 24px;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 html.dark-mode .recipe-card-img-wrapper {
     background: #232323;
+}
+.recipe-card-img-wrapper.loaded {
+    opacity: 1;
 }
 .recipe-card-img {
     width: 100%;
