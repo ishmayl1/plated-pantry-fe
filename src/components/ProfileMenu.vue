@@ -32,8 +32,8 @@ function onLogout() {
 
 <template>
     <v-menu offset-y v-model="menuOpen">
-        <template #activator="{ props }">
-            <button class="profile-menu-btn" v-bind="props">
+        <template #activator="activatorSlot">
+            <button class="profile-menu-btn" v-bind="activatorSlot.props">
                 <v-avatar size="36" class="profile-avatar">
                     <img
                         src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg"

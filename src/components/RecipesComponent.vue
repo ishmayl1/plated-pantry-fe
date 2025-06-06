@@ -1,34 +1,21 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRecipesStore } from '@/stores/recipes.js';
 import AppCard from '@/components/AppCard.vue';
 import AppButton from '@/components/AppButton.vue';
 
-const recipes = ref([]);
-const loading = ref(true);
-const error = ref('');
-
-const API_BASE = import.meta.env.VITE_BE_ENDPOINT || '';
-
-async function fetchRecipes() {
-    loading.value = true;
-    error.value = '';
-    try {
-        const res = await fetch(`${API_BASE}/recipes`);
-        if (!res.ok) throw new Error('Failed to fetch recipes');
-        recipes.value = await res.json();
-    } catch (e) {
-        error.value = e.message || 'Error loading recipes.';
-    } finally {
-        loading.value = false;
-    }
-}
+const recipesStore = useRecipesStore();
+const { recipes, loading, error } = storeToRefs(recipesStore);
 
 function viewRecipe(recipe) {
     // Replace with actual navigation logic, e.g. router.push({ name: 'RecipeDetail', params: { id: recipe.id } })
     alert(`View recipe: ${recipe.title || recipe.name || recipe.id}`);
 }
 
-onMounted(fetchRecipes);
+onMounted(() => {
+    recipesStore.fetchRecipes();
+});
 </script>
 
 <template>

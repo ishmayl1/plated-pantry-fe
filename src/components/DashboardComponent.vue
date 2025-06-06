@@ -41,23 +41,20 @@ function goToWeek() {
 </script>
 
 <template>
-    <AppCard class="pa-10">
+    <AppCard class="pt-5 px-3" darkLevel="2">
         <div
-            class="dashboard-header d-flex justify-space-between align-baseline mb-6 pr-5"
+            class="dashboard-header d-flex justify-space-between align-baseline flex-wrap mb-6 pr-5 pt-5"
         >
-            <h2 class="text-h5 font-weight-bold mb-1">
+            <h2 class="text-h5 font-weight-bold text-left mb-1">
                 Hi, Jon! Ready to cook?
             </h2>
             <div class="dashboard-date text-caption mb-2">
                 Thursday, June 5, 2025
             </div>
-            <AppButton @click="printRecipe" color="primary">
-                <v-icon left>mdi-printer</v-icon> Print Recipe
-            </AppButton>
         </div>
         <RecipeHeroImage />
         <div class="dashboard-details mt-6 mb-4">
-            <AppCard class="ingredients-card mb-4">
+            <AppCard class="ingredients-card mb-4" darkLevel="3">
                 <h3 class="text-h6 font-weight-bold mb-2">Ingredients</h3>
                 <ul class="ingredient-list stylish-ingredients">
                     <li
@@ -77,20 +74,9 @@ function goToWeek() {
             </AppCard>
             <InstructionsCard :steps="steps" />
         </div>
-        <div class="dashboard-actions mt-6 mb-4 d-flex align-center gap-4">
-            <AppButton @click="printRecipe" class="mr-2" color="primary">
-                <v-icon left>mdi-printer</v-icon> Print Recipe
-            </AppButton>
-            <AppButton @click="markCompleted" color="success">
-                <v-icon left>mdi-check-circle</v-icon> Mark as Cooked
-            </AppButton>
-        </div>
         <div class="dashboard-navigation mt-8 mb-2 d-flex align-center gap-4">
             <AppButton @click="goToTomorrow" color="secondary">
                 <v-icon left>mdi-arrow-right-bold</v-icon> Tomorrow’s Meal
-            </AppButton>
-            <AppButton @click="goToWeek" color="secondary">
-                <v-icon left>mdi-calendar-week</v-icon> This Week’s Plan
             </AppButton>
         </div>
         <div class="dashboard-support mt-8 text-caption text-center">

@@ -1,3 +1,16 @@
+<script setup>
+const props = defineProps({
+    steps: {
+        type: Array,
+        required: true
+    }
+});
+
+function printRecipe() {
+    window.print();
+}
+</script>
+
 <template>
     <v-card rounded="xl" elevation="4" class="pa-6">
         <div class="text-h6 font-weight-bold mb-4">Instructions</div>
@@ -13,7 +26,8 @@
             </v-timeline-item>
         </v-timeline>
         <v-btn
-            color="#49b583"
+            @click="printRecipe"
+            style="background-color: var(--color-secondary)"
             class="mt-6"
             block
             rounded="xl"
@@ -24,12 +38,3 @@
         </v-btn>
     </v-card>
 </template>
-
-<script setup>
-const props = defineProps({
-    steps: {
-        type: Array,
-        required: true
-    }
-});
-</script>

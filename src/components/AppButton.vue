@@ -3,6 +3,7 @@
         class="app-btn"
         :type="type"
         :disabled="disabled"
+        :style="buttonStyle"
         @click="$emit('click', $event)"
     >
         <slot />
@@ -10,17 +11,51 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
     type: { type: String, default: 'button' },
-    disabled: Boolean
+    disabled: Boolean,
+    color: {
+        type: String,
+        default: 'primary',
+        validator: (v) => {
+            return ['primary', 'secondary', 'yellow', 'peach'].includes(v);
+        }
+    }
 });
 const emit = defineEmits(['click']);
+
+const colorVars = {
+    primary: {
+        bg: 'var(--color-primary)',
+        text: 'var(--color-background)'
+    },
+    secondary: {
+        bg: 'var(--color-secondary)',
+        text: 'var(--color-button-text)'
+    },
+    yellow: {
+        bg: 'var(--color-yellow)',
+        text: 'var(--color-text)'
+    },
+    peach: {
+        bg: 'var(--color-peach)',
+        text: 'var(--color-text)'
+    }
+};
+
+const buttonStyle = computed(() => {
+    const c = colorVars[props.color] || colorVars.primary;
+    return {
+        background: c.bg,
+        color: c.text
+    };
+});
 </script>
 
 <style scoped>
 .app-btn {
-    background: var(--color-primary);
-    color: var(--color-background);
     border: none;
     border-radius: 999px;
     padding: 0.7em 1.6em;
@@ -35,8 +70,7 @@ const emit = defineEmits(['click']);
     outline: none;
 }
 .app-btn:hover:not(:disabled) {
-    background: var(--color-action);
-    color: var(--color-surface);
+    filter: brightness(0.95);
 }
 .app-btn:disabled {
     opacity: 0.7;

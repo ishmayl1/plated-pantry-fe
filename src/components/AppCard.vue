@@ -32,9 +32,9 @@ html.dark-mode .app-card.dark-level-1 {
     background: #23222a;
 }
 html.dark-mode .app-card.dark-level-2 {
-    background: #18171d;
+    background: #2e2d32;
 }
 html.dark-mode .app-card.dark-level-3 {
-    background: #131218;
+    background: #363537;
 }
 </style>

@@ -20,7 +20,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <v-app-bar flat color="transparent" class="px-8 py-4">
+    <v-app-bar
+        flat
+        style="background-color: var(--color-background)"
+        class="px-8 py-4"
+    >
         <v-btn
             icon
             class="mr-2 d-md-none"
