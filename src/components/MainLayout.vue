@@ -1,8 +1,5 @@
 <script setup>
-import ThemeToggleButton from '@/components/ThemeToggleButton.vue';
 import NavDrawer from '@/components/NavDrawer.vue';
-import HeroImageCard from '@/components/HeroImageCard.vue';
-import InstructionsCard from '@/components/InstructionsCard.vue';
 import AppBar from '@/components/AppBar.vue';
 import MainContent from '@/components/MainContent.vue';
 const steps = [
