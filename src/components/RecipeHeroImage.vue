@@ -1,5 +1,5 @@
 <template>
-    <v-card rounded="xl" elevation="4">
+    <app-card rounded="xl" elevation="4">
         <div class="portrait-img-wrapper">
             <v-img
                 src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=500&q=80"
@@ -41,11 +41,11 @@
                 </v-col>
             </v-row>
         </v-card-text>
-    </v-card>
+    </app-card>
 </template>
 
 <script setup>
-// No script needed for static hero image card
+import AppCard from '@/components/AppCard.vue';
 </script>
 
 <style scoped>
