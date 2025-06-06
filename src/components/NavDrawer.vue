@@ -1,11 +1,5 @@
 <template>
-    <v-navigation-drawer
-        v-if="!isMobile"
-        :permanent="true"
-        app
-        width="256"
-        class="navdrawer-responsive"
-    >
+    <v-navigation-drawer v-if="!isMobile" :permanent="true" app width="256">
         <v-list nav dense>
             <v-list-item class="py-6 nav-header-item">
                 <v-avatar
@@ -86,14 +80,12 @@
         :permanent="false"
         :temporary="true"
         app
-        width="256"
-        class="navdrawer-responsive"
         @click:outside="drawerOpen = false"
     >
         <v-list nav dense>
             <v-list-item
                 class="nav-list-item"
-                style="margin-top: 10vh"
+                style="margin-top: 15vh"
                 value="dashboard"
                 :active="$route.name === 'Dashboard'"
                 @click="
