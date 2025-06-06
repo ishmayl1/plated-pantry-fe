@@ -132,14 +132,11 @@ html.light-mode {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    --color-primary: #f57274;
-    --color-secondary: #c78f58;
-    --color-background: linear-gradient(
-        135deg,
-        #fff8f0 0%,
-        #fbeee0 20%,
-        #fff8f0 100%
-    );
+    --color-primary: #e50046; /* green */
+    --color-secondary: #c7db9c; /* yellow */
+    --color-tertiary: #fff0bd; /* peach */
+    --color-quaternary: #fdab9e; /* crimson */
+    --color-background: #f7faef;
     --color-surface: #fff;
     --color-text: #111;
     --color-action: #49b583;

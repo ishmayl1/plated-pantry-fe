@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', {
         async login(email, password, rememberMe) {
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_AUTH_ENDPOINT}/login`,
+                    `${import.meta.env.VITE_BE_ENDPOINT}/auth/login`,
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -67,7 +67,7 @@ export const useAuthStore = defineStore('auth', {
             this.success = '';
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_AUTH_ENDPOINT}/register`,
+                    `${import.meta.env.VITE_BE_ENDPOINT}/auth/register`,
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },

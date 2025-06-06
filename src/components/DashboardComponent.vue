@@ -41,14 +41,19 @@ function goToWeek() {
 </script>
 
 <template>
-    <AppCard>
-        <div class="dashboard-header d-flex justify-space-between mb-6 pr-5">
+    <AppCard class="pa-10">
+        <div
+            class="dashboard-header d-flex justify-space-between align-baseline mb-6 pr-5"
+        >
             <h2 class="text-h5 font-weight-bold mb-1">
                 Hi, Jon! Ready to cook?
             </h2>
             <div class="dashboard-date text-caption mb-2">
                 Thursday, June 5, 2025
             </div>
+            <AppButton @click="printRecipe" color="primary">
+                <v-icon left>mdi-printer</v-icon> Print Recipe
+            </AppButton>
         </div>
         <RecipeHeroImage />
         <div class="dashboard-details mt-6 mb-4">
