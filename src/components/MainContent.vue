@@ -23,7 +23,7 @@
 @media (max-width: 900px) {
     .main-content-wrapper {
         padding: 1.2rem 0.5rem;
-        margin: 0 0;
+        margin: 25px 0;
         width: 100%;
     }
 }

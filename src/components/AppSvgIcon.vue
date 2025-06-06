@@ -30,7 +30,7 @@ async function fetchSvg() {
     if (!/^https?:/.test(url) && !url.startsWith('/')) {
         url = new URL(`../assets/${url}`, import.meta.url).href;
     }
-    console.log('AppSvgIcon: fetching SVG from', url);
+
     const res = await fetch(url);
     let text = await res.text();
     // Remove width/height from root <svg> and set fill="currentColor" if color is set

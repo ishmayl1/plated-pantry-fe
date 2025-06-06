@@ -1,9 +1,14 @@
 <script setup>
 import { ref } from 'vue';
+
+import { useDevice } from '@/composables/useDevice';
+
 import AppCard from '@/components/AppCard.vue';
 import RecipeHeroImage from '@/components/RecipeHeroImage.vue';
 import InstructionsCard from '@/components/InstructionsCard.vue';
 import AppButton from '@/components/AppButton.vue';
+
+const { isMobile } = useDevice();
 
 const ingredients = [
     '8 oz linguine or spaghetti',
@@ -41,52 +46,60 @@ function goToWeek() {
 </script>
 
 <template>
-    <AppCard class="pt-5 px-3" darkLevel="2">
-        <div
-            class="dashboard-header d-flex justify-space-between align-baseline flex-wrap mb-6 pr-5 pt-5"
-        >
-            <h2 class="text-h5 font-weight-bold text-left mb-1">
-                Hi, Jon! Ready to cook?
-            </h2>
-            <div class="dashboard-date text-caption mb-2">
-                Thursday, June 5, 2025
-            </div>
+    <div
+        v-if="!isMobile"
+        class="dashboard-header d-flex justify-space-between align-baseline flex-wrap mb-6 pr-5 pt-5"
+    >
+        <h2 class="text-h5 font-weight-bold text-left mb-1">
+            Hi, Jon! Ready to cook?
+        </h2>
+        <div class="dashboard-date text-caption mb-2">
+            Thursday, June 5, 2025
         </div>
-        <RecipeHeroImage />
-        <div class="dashboard-details mt-6 mb-4">
-            <AppCard class="ingredients-card mb-4" darkLevel="3">
-                <h3 class="text-h6 font-weight-bold mb-2">Ingredients</h3>
-                <ul class="ingredient-list stylish-ingredients">
-                    <li
-                        v-for="(ingredient, i) in ingredients"
-                        :key="i"
-                        class="ingredient-item"
-                    >
-                        <v-checkbox
-                            v-model="checked[i]"
-                            :label="ingredient"
-                            hide-details
-                            density="compact"
-                            class="ingredient-checkbox"
-                        />
-                    </li>
-                </ul>
-            </AppCard>
-            <InstructionsCard :steps="steps" />
+    </div>
+    <div
+        v-else
+        class="dashboard-header d-flex flex-column justify-center align-center mb-4"
+    >
+        <h2 class="text-h5 font-weight-bold text-left mb-1">
+            Hi, Jon! Ready to cook?
+        </h2>
+        <div class="dashboard-date text-caption mb-2">
+            Thursday, June 5, 2025
         </div>
-        <div class="dashboard-navigation mt-8 mb-2 d-flex align-center gap-4">
-            <AppButton @click="goToTomorrow" color="secondary">
-                <v-icon left>mdi-arrow-right-bold</v-icon> Tomorrow’s Meal
-            </AppButton>
-        </div>
-        <div class="dashboard-support mt-8 text-caption text-center">
-            Need help?
-            <a href="/support" class="dashboard-support-link"
-                >Contact support</a
-            >
-            or check our <a href="/support">FAQs</a>.
-        </div>
-    </AppCard>
+    </div>
+    <RecipeHeroImage />
+    <div class="dashboard-details mt-6 mb-4">
+        <AppCard class="ingredients-card mb-4" darkLevel="3">
+            <h3 class="text-h6 font-weight-bold mb-2">Ingredients</h3>
+            <ul class="ingredient-list stylish-ingredients">
+                <li
+                    v-for="(ingredient, i) in ingredients"
+                    :key="i"
+                    class="ingredient-item"
+                >
+                    <v-checkbox
+                        v-model="checked[i]"
+                        :label="ingredient"
+                        hide-details
+                        density="compact"
+                        class="ingredient-checkbox"
+                    />
+                </li>
+            </ul>
+        </AppCard>
+        <InstructionsCard :steps="steps" />
+    </div>
+    <div class="dashboard-navigation mt-8 mb-2 d-flex align-center gap-4">
+        <AppButton @click="goToTomorrow" color="secondary">
+            <v-icon left>mdi-arrow-right-bold</v-icon> Tomorrow’s Meal
+        </AppButton>
+    </div>
+    <div class="dashboard-support mt-8 text-caption text-center">
+        Need help?
+        <a href="/support" class="dashboard-support-link">Contact support</a>
+        or check our <a href="/support">FAQs</a>.
+    </div>
 </template>
 
 <style scoped>
