@@ -34,7 +34,7 @@ onMounted(() => {
                 <div class="recipe-card-img-wrapper">
                     <img
                         :src="
-                            recipe.image ||
+                            recipe.imageUrl ||
                             'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80'
                         "
                         alt="Recipe image"
@@ -42,32 +42,32 @@ onMounted(() => {
                     />
                 </div>
                 <div class="recipe-card-content">
-                    <div class="recipe-card-category">
+                    <!-- <div class="recipe-card-category">
                         {{ recipe.category || 'Healthy Meals' }}
-                    </div>
+                    </div> -->
                     <div class="recipe-card-title">
                         {{ recipe.title || recipe.name }}
                     </div>
-                    <div class="recipe-card-desc">
+                    <!-- <div class="recipe-card-desc">
                         {{
                             recipe.description ||
                             recipe.subtitle ||
                             'With Bread and Roasted Berries'
                         }}
-                    </div>
+                    </div> -->
                     <div class="recipe-card-meta">
-                        <span v-if="recipe.duration">
-                            <b>{{ recipe.duration }}</b> Mins
+                        <span v-if="recipe.cookTime">
+                            <b>{{ recipe.cookTime }}</b>
                         </span>
                         <span v-if="recipe.calories">
-                            &nbsp; <b>{{ recipe.calories }}</b> Nutrition
+                            &nbsp; <b>{{ recipe.calories }}</b> Calories
                         </span>
                         <span v-if="recipe.ingredients">
                             &nbsp;
                             <b>{{ recipe.ingredients.length }}</b> Ingredients
                         </span>
                     </div>
-                    <div class="recipe-card-rating">
+                    <!-- <div class="recipe-card-rating">
                         <span class="star" v-for="i in 5" :key="i">
                             <v-icon
                                 :color="
@@ -83,7 +83,7 @@ onMounted(() => {
                         <span class="rating-count">
                             {{ recipe.ratingCount || 29 }}
                         </span>
-                    </div>
+                    </div> -->
                     <div class="recipe-card-actions">
                         <AppButton
                             color="primary"
@@ -91,9 +91,7 @@ onMounted(() => {
                         >
                             View Recipe
                         </AppButton>
-                        <AppButton color="secondary" disabled>
-                            Add to Collection
-                        </AppButton>
+                        <AppButton type="text"> Add to Collection </AppButton>
                     </div>
                 </div>
                 <v-icon class="recipe-card-fav" color="var(--color-primary)">
