@@ -4,16 +4,30 @@ import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
 
 const authStore = useAuthStore();
-const { user } = useUserStore();
+const userStore = useUserStore();
+const { user } = userStore;
 
 const isDark = ref(false);
 const menuOpen = ref(false);
 
 onMounted(() => {
-    isDark.value = document.documentElement.classList.contains('dark-mode');
+    // Set theme based on user preference if available
+    if (user && typeof user.darkMode === 'boolean') {
+        isDark.value = user.darkMode;
+    } else {
+        isDark.value = document.documentElement.classList.contains('dark-mode');
+    }
+    const html = document.documentElement;
+    if (isDark.value) {
+        html.classList.add('dark-mode');
+        html.classList.remove('light-mode');
+    } else {
+        html.classList.remove('dark-mode');
+        html.classList.add('light-mode');
+    }
 });
 
-function toggleTheme() {
+async function toggleTheme() {
     const html = document.documentElement;
     isDark.value = !isDark.value;
     if (isDark.value) {
@@ -23,6 +37,8 @@ function toggleTheme() {
         html.classList.remove('dark-mode');
         html.classList.add('light-mode');
     }
+    // Persist darkMode preference to backend and local user store
+    await userStore.updateUser({ darkMode: isDark.value });
 }
 
 function onLogout() {

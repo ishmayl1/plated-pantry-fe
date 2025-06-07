@@ -31,11 +31,51 @@ export const useUserStore = defineStore('user', () => {
 
     const isLoggedIn = computed(() => !!user.value);
 
+    async function updateUser({ firstName, lastName, darkMode }) {
+        const token =
+            localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+        if (!token) throw new Error('Not authenticated');
+        const updateFields = {};
+        if (firstName !== undefined) updateFields.firstName = firstName;
+        if (lastName !== undefined) updateFields.lastName = lastName;
+        if (darkMode !== undefined) updateFields.darkMode = darkMode;
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_BE_ENDPOINT}/auth/user`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(updateFields)
+                }
+            );
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to update user');
+            }
+            // Update local user state
+            user.value = {
+                ...user.value,
+                ...data,
+                fullName: `${data.firstName} ${data.lastName}`.trim()
+            };
+            // Persist updated user
+            const rememberMe = !!localStorage.getItem('jwt');
+            setUser(user.value, rememberMe);
+            return { success: true };
+        } catch (err) {
+            return { success: false, error: err.message };
+        }
+    }
+
     return {
         user,
         setUser,
         clearUser,
         initialize,
-        isLoggedIn
+        isLoggedIn,
+        updateUser
     };
 });
