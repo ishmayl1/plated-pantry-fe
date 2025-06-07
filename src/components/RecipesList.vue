@@ -27,7 +27,7 @@ onMounted(() => {
 
 <template>
     <div>
-        <div v-if="!loading" class="text-center py-8">
+        <div v-if="loading" class="text-center py-8">
             <LoadingAnimation />
         </div>
         <div v-else-if="error" class="text-center text-error py-8">
