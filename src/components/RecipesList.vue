@@ -27,33 +27,40 @@ onMounted(() => {
 
 <template>
     <div>
-        <div v-if="loading" class="text-center py-8">
+        <div v-if="!loading" class="text-center py-8">
             <LoadingAnimation />
         </div>
         <div v-else-if="error" class="text-center text-error py-8">
             {{ error }}
         </div>
-        <div v-else class="recipes-grid-view">
-            <div
-                v-for="recipe in recipes"
-                :key="recipe.id || recipe._id"
-                @click="viewRecipe(recipe)"
-                class="recipe-card-img-wrapper"
-                :class="{ loaded: loadedImages[recipe.id || recipe._id] }"
-            >
-                <img
-                    :src="
-                        recipe.imageUrl ||
-                        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80'
-                    "
-                    alt="Recipe image"
-                    class="recipe-card-img"
-                    @load="onImgLoad(recipe.id || recipe._id)"
-                />
+        <div v-else>
+            <div class="px-3">
+                <span class="text-h6">
+                    What's cooking? Here's your recipes for the week!
+                </span>
+            </div>
+            <div class="recipes-grid-view">
                 <div
-                    class="recipe-card-name-bar d-flex align-center justify-center px-2"
+                    v-for="recipe in recipes"
+                    :key="recipe.id || recipe._id"
+                    @click="viewRecipe(recipe)"
+                    class="recipe-card-img-wrapper"
+                    :class="{ loaded: loadedImages[recipe.id || recipe._id] }"
                 >
-                    {{ recipe.name }}
+                    <img
+                        :src="
+                            recipe.imageUrl ||
+                            'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80'
+                        "
+                        alt="Recipe image"
+                        class="recipe-card-img"
+                        @load="onImgLoad(recipe.id || recipe._id)"
+                    />
+                    <div
+                        class="recipe-card-name-bar d-flex align-center justify-center px-2"
+                    >
+                        {{ recipe.name }}
+                    </div>
                 </div>
             </div>
         </div>
