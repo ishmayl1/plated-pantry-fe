@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { apiFetch } from '@/utils/apiFetch';
 
 export const useRecipesStore = defineStore('recipes', () => {
     const recipes = ref([]);
@@ -9,9 +10,10 @@ export const useRecipesStore = defineStore('recipes', () => {
     async function fetchRecipes() {
         loading.value = true;
         error.value = '';
+
         const API_BASE = import.meta.env.VITE_BE_ENDPOINT || '';
         try {
-            const res = await fetch(`${API_BASE}/recipes`);
+            const res = await apiFetch(`${API_BASE}/recipes`);
             if (!res.ok) throw new Error('Failed to fetch recipes');
             recipes.value = await res.json();
         } catch (e) {

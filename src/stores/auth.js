@@ -6,6 +6,7 @@ export const useAuthStore = defineStore('auth', () => {
     const token = ref(localStorage.getItem('jwt') || null);
     const error = ref('');
     const success = ref('');
+    const userStore = useUserStore();
 
     function setToken(newToken, rememberMe) {
         token.value = newToken;
@@ -25,10 +26,13 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     function initialize() {
+        // Set JWT token from storage if available
         token.value =
             localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
-        const userStore = useUserStore();
-        userStore.initialize();
+        // Set user from storage if available
+        const storedUser =
+            localStorage.getItem('user') || sessionStorage.getItem('user');
+        userStore.setUser(storedUser ? JSON.parse(storedUser) : null);
     }
 
     async function login(email, password, rememberMe) {

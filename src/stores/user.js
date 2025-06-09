@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
+import { apiFetch } from '@/utils/apiFetch';
 
 export const useUserStore = defineStore('user', () => {
     const user = ref(null);
@@ -23,31 +24,18 @@ export const useUserStore = defineStore('user', () => {
         sessionStorage.removeItem('user');
     }
 
-    function initialize() {
-        const stored =
-            localStorage.getItem('user') || sessionStorage.getItem('user');
-        user.value = stored ? JSON.parse(stored) : null;
-    }
-
     const isLoggedIn = computed(() => !!user.value);
 
     async function updateUser({ firstName, lastName, darkMode }) {
-        const token =
-            localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
-        if (!token) throw new Error('Not authenticated');
         const updateFields = {};
         if (firstName !== undefined) updateFields.firstName = firstName;
         if (lastName !== undefined) updateFields.lastName = lastName;
         if (darkMode !== undefined) updateFields.darkMode = darkMode;
         try {
-            const response = await fetch(
+            const response = await apiFetch(
                 `${import.meta.env.VITE_BE_ENDPOINT}/auth/user`,
                 {
                     method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    },
                     body: JSON.stringify(updateFields)
                 }
             );
@@ -74,7 +62,6 @@ export const useUserStore = defineStore('user', () => {
         user,
         setUser,
         clearUser,
-        initialize,
         isLoggedIn,
         updateUser
     };

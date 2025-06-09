@@ -1,25 +1,22 @@
 import { createApp } from 'vue';
 import App from '@/App.vue';
 import { createPinia } from 'pinia';
-import router from '@/router'; // <-- Import the router instance, not routes
+import router from '@/router';
 import vuetify from '@/plugins/vuetify';
 import { createHead } from '@vueuse/head';
 import '@/style.css';
 import { useAuthStore } from '@/stores/auth';
-import { useUserStore } from '@/stores/user';
-import '@mdi/font/css/materialdesignicons.css'; // <-- Import Material Design Icons CSS
+import '@mdi/font/css/materialdesignicons.css';
 
 const app = createApp(App);
 const pinia = createPinia();
 app.use(pinia);
 
-// Initialize stores before mounting
+// Initialize sets JWT and User data from localStorage/sessionStorage
 const auth = useAuthStore();
 auth.initialize();
-const userStore = useUserStore();
-userStore.initialize();
 
-app.use(router); // <-- Use the router instance
+app.use(router);
 app.use(vuetify);
 app.use(createHead());
 app.mount('#app');
