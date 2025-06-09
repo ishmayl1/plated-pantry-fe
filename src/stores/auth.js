@@ -32,7 +32,9 @@ export const useAuthStore = defineStore('auth', () => {
         // Set user from storage if available
         const storedUser =
             localStorage.getItem('user') || sessionStorage.getItem('user');
-        userStore.setUser(storedUser ? JSON.parse(storedUser) : null);
+        if (storedUser) {
+            userStore.setUser(JSON.parse(storedUser));
+        }
     }
 
     async function login(email, password, rememberMe) {
